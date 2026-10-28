@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminDashboardForm));
             pnlSidebar = new Panel();
+            button6 = new Button();
             pictureBox1 = new PictureBox();
             button5 = new Button();
             button4 = new Button();
@@ -62,12 +64,16 @@
             txtSearchEvent = new TextBox();
             pnlSummaryCards = new Panel();
             panel3 = new Panel();
+            label11 = new Label();
             label7 = new Label();
             panel4 = new Panel();
+            label12 = new Label();
             label8 = new Label();
             panel2 = new Panel();
+            label10 = new Label();
             label6 = new Label();
             panel1 = new Panel();
+            label9 = new Label();
             label5 = new Label();
             pnlSidebar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -85,6 +91,7 @@
             // pnlSidebar
             // 
             pnlSidebar.BackColor = Color.White;
+            pnlSidebar.Controls.Add(button6);
             pnlSidebar.Controls.Add(pictureBox1);
             pnlSidebar.Controls.Add(button5);
             pnlSidebar.Controls.Add(button4);
@@ -97,6 +104,17 @@
             pnlSidebar.Name = "pnlSidebar";
             pnlSidebar.Size = new Size(220, 703);
             pnlSidebar.TabIndex = 0;
+            // 
+            // button6
+            // 
+            button6.BackColor = Color.DodgerBlue;
+            button6.Image = (Image)resources.GetObject("button6.Image");
+            button6.Location = new Point(12, 24);
+            button6.Margin = new Padding(3, 4, 3, 4);
+            button6.Name = "button6";
+            button6.Size = new Size(47, 50);
+            button6.TabIndex = 10;
+            button6.UseVisualStyleBackColor = false;
             // 
             // pictureBox1
             // 
@@ -150,7 +168,7 @@
             button2.Name = "button2";
             button2.Size = new Size(149, 29);
             button2.TabIndex = 2;
-            button2.Text = "Manage Organizer";
+            button2.Text = "All Events";
             button2.TextAlign = ContentAlignment.MiddleLeft;
             button2.UseVisualStyleBackColor = true;
             // 
@@ -171,7 +189,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(37, 31);
+            label1.Location = new Point(61, 31);
             label1.Name = "label1";
             label1.Size = new Size(86, 20);
             label1.TabIndex = 0;
@@ -437,11 +455,22 @@
             // panel3
             // 
             panel3.BorderStyle = BorderStyle.FixedSingle;
+            panel3.Controls.Add(label11);
             panel3.Controls.Add(label7);
             panel3.Location = new Point(511, 20);
             panel3.Name = "panel3";
             panel3.Size = new Size(159, 69);
             panel3.TabIndex = 1;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label11.Location = new Point(45, 36);
+            label11.Name = "label11";
+            label11.Size = new Size(36, 28);
+            label11.TabIndex = 3;
+            label11.Text = "12";
             // 
             // label7
             // 
@@ -455,11 +484,22 @@
             // panel4
             // 
             panel4.BorderStyle = BorderStyle.FixedSingle;
+            panel4.Controls.Add(label12);
             panel4.Controls.Add(label8);
             panel4.Location = new Point(744, 20);
             panel4.Name = "panel4";
             panel4.Size = new Size(159, 69);
             panel4.TabIndex = 1;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label12.Location = new Point(41, 36);
+            label12.Name = "label12";
+            label12.Size = new Size(36, 28);
+            label12.TabIndex = 3;
+            label12.Text = "12";
             // 
             // label8
             // 
@@ -473,11 +513,23 @@
             // panel2
             // 
             panel2.BorderStyle = BorderStyle.FixedSingle;
+            panel2.Controls.Add(label10);
             panel2.Controls.Add(label6);
             panel2.Location = new Point(276, 20);
             panel2.Name = "panel2";
             panel2.Size = new Size(159, 69);
             panel2.TabIndex = 1;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label10.Location = new Point(43, 39);
+            label10.Name = "label10";
+            label10.Size = new Size(36, 28);
+            label10.TabIndex = 3;
+            label10.Text = "25";
+            label10.Click += label10_Click;
             // 
             // label6
             // 
@@ -491,12 +543,23 @@
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(label9);
             panel1.Controls.Add(label5);
             panel1.Location = new Point(47, 20);
             panel1.Name = "panel1";
             panel1.Size = new Size(159, 69);
             panel1.TabIndex = 0;
             panel1.Paint += panel1_Paint;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label9.Location = new Point(35, 36);
+            label9.Name = "label9";
+            label9.Size = new Size(36, 28);
+            label9.TabIndex = 2;
+            label9.Text = "12";
             // 
             // label5
             // 
@@ -583,5 +646,10 @@
         private Panel panel2;
         private Label label6;
         private Label label5;
+        private Label label11;
+        private Label label12;
+        private Label label10;
+        private Label label9;
+        private Button button6;
     }
 }
