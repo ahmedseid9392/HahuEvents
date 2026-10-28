@@ -522,7 +522,7 @@
             // 
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label9.Location = new Point(32, 36);
+            label9.Location = new Point(35, 36);
             label9.Name = "label9";
             label9.Size = new Size(36, 28);
             label9.TabIndex = 2;
@@ -536,7 +536,8 @@
             label10.Name = "label10";
             label10.Size = new Size(36, 28);
             label10.TabIndex = 3;
-            label10.Text = "12";
+            label10.Text = "25";
+            label10.Click += label10_Click;
             // 
             // label11
             // 
