@@ -214,10 +214,11 @@
             // label2
             // 
             label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 12F);
             label2.ForeColor = Color.FromArgb(23, 32, 51);
-            label2.Location = new Point(47, 9);
+            label2.Location = new Point(16, 11);
             label2.Name = "label2";
-            label2.Size = new Size(177, 20);
+            label2.Size = new Size(234, 28);
             label2.TabIndex = 0;
             label2.Text = "Administrator Dashboard";
             label2.Click += label2_Click;
@@ -258,6 +259,7 @@
             dgvAllEvents.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvAllEvents.Size = new Size(962, 409);
             dgvAllEvents.TabIndex = 2;
+            dgvAllEvents.CellContentClick += dgvAllEvents_CellContentClick;
             // 
             // colEventId
             // 
@@ -446,9 +448,9 @@
             label7.AutoSize = true;
             label7.Location = new Point(18, 6);
             label7.Name = "label7";
-            label7.Size = new Size(50, 20);
+            label7.Size = new Size(119, 20);
             label7.TabIndex = 1;
-            label7.Text = "label7";
+            label7.Text = "Published Events";
             // 
             // panel4
             // 
@@ -464,9 +466,9 @@
             label8.AutoSize = true;
             label8.Location = new Point(16, 6);
             label8.Name = "label8";
-            label8.Size = new Size(50, 20);
+            label8.Size = new Size(114, 20);
             label8.TabIndex = 2;
-            label8.Text = "label8";
+            label8.Text = "Cancelled Event";
             // 
             // panel2
             // 
@@ -482,9 +484,9 @@
             label6.AutoSize = true;
             label6.Location = new Point(20, 6);
             label6.Name = "label6";
-            label6.Size = new Size(50, 20);
+            label6.Size = new Size(82, 20);
             label6.TabIndex = 0;
-            label6.Text = "label6";
+            label6.Text = "Total event";
             // 
             // panel1
             // 
@@ -494,6 +496,7 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(159, 69);
             panel1.TabIndex = 0;
+            panel1.Paint += panel1_Paint;
             // 
             // label5
             // 
