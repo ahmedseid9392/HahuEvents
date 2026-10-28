@@ -259,7 +259,6 @@
             dgvAllEvents.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvAllEvents.Size = new Size(962, 409);
             dgvAllEvents.TabIndex = 2;
-            dgvAllEvents.CellContentClick += dgvAllEvents_CellContentClick;
             // 
             // colEventId
             // 
@@ -496,7 +495,6 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(159, 69);
             panel1.TabIndex = 0;
-            panel1.Paint += panel1_Paint;
             // 
             // label5
             // 
