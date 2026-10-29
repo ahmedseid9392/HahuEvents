@@ -3,7 +3,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace HahuEvents.Desktop.Forms
 {
-    partial class EventForm
+    partial class OrganizerEventForm
     {
         private System.ComponentModel.IContainer components = null;
 

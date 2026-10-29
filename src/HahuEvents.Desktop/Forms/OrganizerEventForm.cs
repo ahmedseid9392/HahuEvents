@@ -8,11 +8,11 @@ namespace HahuEvents.Desktop.Forms
     public partial class OrganizerEventForm : Form
     {
         private readonly int _organizerId;
-        private readonly Event _existingEvent;
+        private readonly Event? _existingEvent;
 
         private static int _nextEventId = 1;
 
-        public Event SavedEvent { get; private set; }
+        public Event? SavedEvent { get; private set; }
 
         // Required for the Visual Studio Designer.
         public OrganizerEventForm()
@@ -21,7 +21,7 @@ namespace HahuEvents.Desktop.Forms
             ConfigureForm();
         }
 
-        public OrganizerEventForm(int organizerId, Event existingEvent = null)
+        public OrganizerEventForm(int organizerId, Event? existingEvent = null)
             : this()
         {
             if (organizerId <= 0)
@@ -34,15 +34,15 @@ namespace HahuEvents.Desktop.Forms
             _organizerId = organizerId;
             _existingEvent = existingEvent;
 
-            if (_existingEvent != null)
+            if (existingEvent != null)
             {
-                if (_existingEvent.OrganizerId != _organizerId)
+                if (existingEvent.OrganizerId != _organizerId)
                 {
                     throw new UnauthorizedAccessException(
                         "You can only edit your own events.");
                 }
 
-                LoadEventDetails();
+                LoadEventDetails(existingEvent);
             }
         }
 
@@ -67,26 +67,26 @@ namespace HahuEvents.Desktop.Forms
             }
         }
 
-        private void LoadEventDetails()
+        private void LoadEventDetails(Event existingEvent)
         {
             Text = "Edit Event";
             lblFormTitle.Text = "Edit Event";
             btnSaveEvent.Text = "Save Changes";
 
-            txtEventTitle.Text = _existingEvent.Title;
-            txtDescription.Text = _existingEvent.Description;
-            txtLocation.Text = _existingEvent.Location;
+            txtEventTitle.Text = existingEvent.Title;
+            txtDescription.Text = existingEvent.Description;
+            txtLocation.Text = existingEvent.Location;
             nudCapacity.Value = Math.Max(
                 nudCapacity.Minimum,
-                Math.Min(nudCapacity.Maximum, _existingEvent.Capacity));
+                Math.Min(nudCapacity.Maximum, existingEvent.Capacity));
 
-            dtpEventDate.Value = _existingEvent.Date;
+            dtpEventDate.Value = existingEvent.Date;
 
             cmbEventStatus.SelectedItem =
-                _existingEvent.Status.ToString();
+                existingEvent.Status.ToString();
 
             // Keep cancelled events from being accidentally republished.
-            if (_existingEvent.Status == EventStatus.Cancelled)
+            if (existingEvent.Status == EventStatus.Cancelled)
             {
                 cmbEventStatus.Items.Add("Cancelled");
                 cmbEventStatus.SelectedItem = "Cancelled";
@@ -121,14 +121,13 @@ namespace HahuEvents.Desktop.Forms
                 return;
             }
 
-            if (cmbEventStatus.SelectedItem == null)
+            if (cmbEventStatus.SelectedItem is not string selectedStatus)
             {
                 MessageBox.Show("Select an event status.");
                 return;
             }
 
-            EventStatus status = Enum.Parse<EventStatus>(
-                cmbEventStatus.SelectedItem.ToString());
+            EventStatus status = Enum.Parse<EventStatus>(selectedStatus);
 
             // Do not allow this form to change event ownership.
             if (_existingEvent != null &&

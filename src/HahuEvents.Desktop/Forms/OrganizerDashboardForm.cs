@@ -7,15 +7,13 @@ namespace HahuEvents.Desktop.Forms
 {
     public partial class OrganizerDashboardForm : Form
     {
-        public int CurrentOrganizerId { get; set; }
+        private readonly int _currentOrganizerId;
         public OrganizerDashboardForm()
 
         {
-           InitializeComponent();
+            InitializeComponent();
             dgvMyEvents.CellDoubleClick +=
-            dgvMyEvents_CellDoubleClick;
-
-
+                dgvMyEvents_CellDoubleClick;
 
             // Set initial filter values.
             cmbStatusFilter.Items.AddRange(new object[]
@@ -43,6 +41,19 @@ namespace HahuEvents.Desktop.Forms
             lblPublishedEventsCount.Text = "8";
             lblTotalRegistrations.Text = "103";
             lblUpcomingEventsCount.Text = "13";
+        }
+
+        public OrganizerDashboardForm(int organizerId)
+            : this()
+        {
+            if (organizerId <= 0)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(organizerId),
+                    "A valid organizer ID is required.");
+            }
+
+            _currentOrganizerId = organizerId;
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -93,18 +104,17 @@ namespace HahuEvents.Desktop.Forms
 
         private void btnCreateEvent_Click(object sender, EventArgs e)
         {
-            if (CurrentOrganizerId <= 0)
+            if (_currentOrganizerId <= 0)
             {
                 MessageBox.Show("Please log in as an Organizer first.");
                 return;
             }
 
-            using (var form = new OrganizerEventForm(CurrentOrganizerId))
+            using (var form = new OrganizerEventForm(_currentOrganizerId))
             {
-                if (form.ShowDialog(this) == DialogResult.OK)
+                if (form.ShowDialog(this) == DialogResult.OK &&
+                    form.SavedEvent is Event ev)
                 {
-                    Event ev = form.SavedEvent;
-
                     int rowIndex = dgvMyEvents.Rows.Add(
                         ev.Id,
                         ev.Title,
@@ -120,20 +130,20 @@ namespace HahuEvents.Desktop.Forms
             }
         }
         private void dgvMyEvents_CellDoubleClick(
-    object sender,
+    object? sender,
     DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
                 return;
 
-            if (CurrentOrganizerId <= 0)
+            if (_currentOrganizerId <= 0)
             {
                 MessageBox.Show("Please log in as an Organizer.");
                 return;
             }
 
             var row = dgvMyEvents.Rows[e.RowIndex];
-            Event selectedEvent = row.Tag as Event;
+            Event? selectedEvent = row.Tag as Event;
 
             if (selectedEvent == null)
             {
@@ -142,7 +152,7 @@ namespace HahuEvents.Desktop.Forms
                 return;
             }
 
-            if (selectedEvent.OrganizerId != CurrentOrganizerId)
+            if (selectedEvent.OrganizerId != _currentOrganizerId)
             {
                 MessageBox.Show(
                     "You can only edit your own events.");
@@ -150,12 +160,11 @@ namespace HahuEvents.Desktop.Forms
             }
 
             using (var form = new OrganizerEventForm(
-                CurrentOrganizerId, selectedEvent))
+                _currentOrganizerId, selectedEvent))
             {
-                if (form.ShowDialog(this) == DialogResult.OK)
+                if (form.ShowDialog(this) == DialogResult.OK &&
+                    form.SavedEvent is Event updated)
                 {
-                    Event updated = form.SavedEvent;
-
                     row.Cells["EventTitle"].Value = updated.Title;
                     row.Cells["EventDate"].Value =
                         updated.Date.ToString("dd/MM/yyyy HH:mm");
