@@ -10,6 +10,9 @@ namespace HahuEvents.Desktop.Forms
 {
     public partial class OrganizerDashboardForm : Form
     {
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public int CurrentOrganizerId { get; set; }
+
         public OrganizerDashboardForm()
         {
             InitializeComponent();
