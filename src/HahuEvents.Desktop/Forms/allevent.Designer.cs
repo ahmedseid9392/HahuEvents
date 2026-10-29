@@ -37,22 +37,7 @@
             lblAdministration = new Label();
             lblBrand = new Label();
             pnlMain = new Panel();
-            lblEventCount = new Label();
-            lblSubtitle = new Label();
-            lblTitle = new Label();
-            pnlFilters = new Panel();
-            lblSearch = new Label();
-            txtSearch = new TextBox();
-            lblOrganizer = new Label();
-            cmbOrganizer = new ComboBox();
-            lblStatus = new Label();
-            cmbStatus = new ComboBox();
-            lblStartDate = new Label();
-            dtpStartDate = new DateTimePicker();
-            lblEndDate = new Label();
-            dtpEndDate = new DateTimePicker();
-            btnSearch = new Button();
-            btnReset = new Button();
+            lblFooter = new Label();
             dgvAllEvents = new DataGridView();
             colEventId = new DataGridViewTextBoxColumn();
             colTitle = new DataGridViewTextBoxColumn();
@@ -63,9 +48,26 @@
             colRegistrations = new DataGridViewTextBoxColumn();
             colStatus = new DataGridViewTextBoxColumn();
             colViewDetails = new DataGridViewButtonColumn();
-            lblFooter = new Label();
+            pnlFilters = new Panel();
+            btnReset = new Button();
+            btnSearch = new Button();
+            dtpEndDate = new DateTimePicker();
+            lblEndDate = new Label();
+            dtpStartDate = new DateTimePicker();
+            lblStartDate = new Label();
+            cmbStatus = new ComboBox();
+            lblStatus = new Label();
+            cmbOrganizer = new ComboBox();
+            lblOrganizer = new Label();
+            txtSearch = new TextBox();
+            lblSearch = new Label();
+            lblEventCount = new Label();
+            lblSubtitle = new Label();
+            lblTitle = new Label();
             pnlSidebar.SuspendLayout();
             pnlMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvAllEvents).BeginInit();
+            pnlFilters.SuspendLayout();
             SuspendLayout();
             // 
             // pnlSidebar
@@ -183,16 +185,107 @@
             pnlMain.Size = new Size(1002, 703);
             pnlMain.TabIndex = 1;
             // 
-            // lblEventCount
+            // lblFooter
             // 
-            lblEventCount.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            lblEventCount.AutoSize = true;
-            lblEventCount.ForeColor = Color.FromArgb(102, 112, 133);
-            lblEventCount.Location = new Point(890, 31);
-            lblEventCount.Name = "lblEventCount";
-            lblEventCount.Size = new Size(98, 20);
-            lblEventCount.TabIndex = 2;
-            lblEventCount.Text = "0 total events";
+            lblFooter.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            lblFooter.ForeColor = Color.FromArgb(102, 112, 133);
+            lblFooter.Location = new Point(18, 650);
+            lblFooter.Name = "lblFooter";
+            lblFooter.Size = new Size(960, 32);
+            lblFooter.TabIndex = 5;
+            lblFooter.Text = "HahuEvents | Event Registration Management System";
+            lblFooter.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // dgvAllEvents
+            // 
+            dgvAllEvents.AllowUserToAddRows = false;
+            dgvAllEvents.AllowUserToDeleteRows = false;
+            dgvAllEvents.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvAllEvents.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvAllEvents.BackgroundColor = Color.White;
+            dgvAllEvents.BorderStyle = BorderStyle.None;
+            dgvAllEvents.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvAllEvents.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvAllEvents.Columns.AddRange(new DataGridViewColumn[] { colEventId, colTitle, colOrganizer, colEventDate, colLocation, colCapacity, colRegistrations, colStatus, colViewDetails });
+            dgvAllEvents.GridColor = Color.FromArgb(217, 223, 234);
+            dgvAllEvents.Location = new Point(18, 210);
+            dgvAllEvents.MultiSelect = false;
+            dgvAllEvents.Name = "dgvAllEvents";
+            dgvAllEvents.ReadOnly = true;
+            dgvAllEvents.RowHeadersVisible = false;
+            dgvAllEvents.RowHeadersWidth = 51;
+            dgvAllEvents.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvAllEvents.Size = new Size(960, 420);
+            dgvAllEvents.TabIndex = 4;
+            dgvAllEvents.CellFormatting += dgvAllEvents_CellFormatting;
+            // 
+            // colEventId
+            // 
+            colEventId.HeaderText = "Event ID";
+            colEventId.MinimumWidth = 6;
+            colEventId.Name = "colEventId";
+            colEventId.ReadOnly = true;
+            // 
+            // colTitle
+            // 
+            colTitle.HeaderText = "Title";
+            colTitle.MinimumWidth = 6;
+            colTitle.Name = "colTitle";
+            colTitle.ReadOnly = true;
+            // 
+            // colOrganizer
+            // 
+            colOrganizer.HeaderText = "Organizer";
+            colOrganizer.MinimumWidth = 6;
+            colOrganizer.Name = "colOrganizer";
+            colOrganizer.ReadOnly = true;
+            // 
+            // colEventDate
+            // 
+            colEventDate.HeaderText = "Date";
+            colEventDate.MinimumWidth = 6;
+            colEventDate.Name = "colEventDate";
+            colEventDate.ReadOnly = true;
+            // 
+            // colLocation
+            // 
+            colLocation.HeaderText = "Location";
+            colLocation.MinimumWidth = 6;
+            colLocation.Name = "colLocation";
+            colLocation.ReadOnly = true;
+            // 
+            // colCapacity
+            // 
+            colCapacity.HeaderText = "Capacity";
+            colCapacity.MinimumWidth = 6;
+            colCapacity.Name = "colCapacity";
+            colCapacity.ReadOnly = true;
+            // 
+            // colRegistrations
+            // 
+            colRegistrations.HeaderText = "Registrations";
+            colRegistrations.MinimumWidth = 6;
+            colRegistrations.Name = "colRegistrations";
+            colRegistrations.ReadOnly = true;
+            // 
+            // colStatus
+            // 
+            colStatus.HeaderText = "Status";
+            colStatus.MinimumWidth = 6;
+            colStatus.Name = "colStatus";
+            colStatus.ReadOnly = true;
+            // 
+            // colViewDetails
+            // 
+            colViewDetails.HeaderText = "View Details";
+            colViewDetails.MinimumWidth = 6;
+            colViewDetails.Name = "colViewDetails";
+            colViewDetails.ReadOnly = true;
+            colViewDetails.Text = "View Details";
+            colViewDetails.UseColumnTextForButtonValue = true;
+            // 
+            // pnlFilters
+            // 
             pnlFilters.BackColor = Color.FromArgb(245, 248, 250);
             pnlFilters.BorderStyle = BorderStyle.FixedSingle;
             pnlFilters.Controls.Add(btnReset);
@@ -211,80 +304,9 @@
             pnlFilters.Name = "pnlFilters";
             pnlFilters.Size = new Size(960, 88);
             pnlFilters.TabIndex = 3;
-            lblSearch.AutoSize = true;
-            lblSearch.Location = new Point(10, 10);
-            lblSearch.Name = "lblSearch";
-            lblSearch.Size = new Size(57, 20);
-            lblSearch.TabIndex = 0;
-            lblSearch.Text = "Search:";
-            txtSearch.Location = new Point(10, 35);
-            txtSearch.Name = "txtSearch";
-            txtSearch.PlaceholderText = "Search events...";
-            txtSearch.Size = new Size(190, 27);
-            txtSearch.TabIndex = 1;
-            lblOrganizer.AutoSize = true;
-            lblOrganizer.Location = new Point(215, 10);
-            lblOrganizer.Name = "lblOrganizer";
-            lblOrganizer.Size = new Size(76, 20);
-            lblOrganizer.TabIndex = 2;
-            lblOrganizer.Text = "Organizer";
-            cmbOrganizer.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbOrganizer.FormattingEnabled = true;
-            cmbOrganizer.Items.AddRange(new object[] { "All Organizers" });
-            cmbOrganizer.Location = new Point(215, 35);
-            cmbOrganizer.Name = "cmbOrganizer";
-            cmbOrganizer.Size = new Size(135, 28);
-            cmbOrganizer.TabIndex = 3;
-            cmbOrganizer.SelectedIndex = 0;
-            lblStatus.AutoSize = true;
-            lblStatus.Location = new Point(365, 10);
-            lblStatus.Name = "lblStatus";
-            lblStatus.Size = new Size(49, 20);
-            lblStatus.TabIndex = 4;
-            lblStatus.Text = "Status";
-            cmbStatus.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbStatus.FormattingEnabled = true;
-            cmbStatus.Items.AddRange(new object[] { "All", "Draft", "Published", "Cancelled" });
-            cmbStatus.Location = new Point(365, 35);
-            cmbStatus.Name = "cmbStatus";
-            cmbStatus.Size = new Size(110, 28);
-            cmbStatus.TabIndex = 5;
-            cmbStatus.SelectedIndex = 0;
-            lblStartDate.AutoSize = true;
-            lblStartDate.Location = new Point(490, 10);
-            lblStartDate.Name = "lblStartDate";
-            lblStartDate.Size = new Size(75, 20);
-            lblStartDate.TabIndex = 6;
-            lblStartDate.Text = "Start Date";
-            dtpStartDate.Format = DateTimePickerFormat.Short;
-            dtpStartDate.ShowCheckBox = true;
-            dtpStartDate.Location = new Point(490, 35);
-            dtpStartDate.Name = "dtpStartDate";
-            dtpStartDate.Size = new Size(105, 27);
-            dtpStartDate.TabIndex = 7;
-            lblEndDate.AutoSize = true;
-            lblEndDate.Location = new Point(605, 10);
-            lblEndDate.Name = "lblEndDate";
-            lblEndDate.Size = new Size(69, 20);
-            lblEndDate.TabIndex = 8;
-            lblEndDate.Text = "End Date";
-            dtpEndDate.Format = DateTimePickerFormat.Short;
-            dtpEndDate.ShowCheckBox = true;
-            dtpEndDate.Location = new Point(605, 35);
-            dtpEndDate.Name = "dtpEndDate";
-            dtpEndDate.Size = new Size(105, 27);
-            dtpEndDate.TabIndex = 9;
-            btnSearch.BackColor = Color.FromArgb(36, 87, 197);
-            btnSearch.FlatAppearance.BorderSize = 0;
-            btnSearch.FlatStyle = FlatStyle.Flat;
-            btnSearch.ForeColor = Color.White;
-            btnSearch.Location = new Point(725, 34);
-            btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(70, 30);
-            btnSearch.TabIndex = 10;
-            btnSearch.Text = "Search";
-            btnSearch.UseVisualStyleBackColor = false;
-            btnSearch.Click += btnSearch_Click;
+            // 
+            // btnReset
+            // 
             btnReset.BackColor = Color.White;
             btnReset.FlatAppearance.BorderColor = Color.FromArgb(217, 223, 234);
             btnReset.FlatStyle = FlatStyle.Flat;
@@ -296,53 +318,122 @@
             btnReset.Text = "Reset";
             btnReset.UseVisualStyleBackColor = false;
             btnReset.Click += btnReset_Click;
-            dgvAllEvents.AllowUserToAddRows = false;
-            dgvAllEvents.AllowUserToDeleteRows = false;
-            dgvAllEvents.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            dgvAllEvents.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvAllEvents.BackgroundColor = Color.White;
-            dgvAllEvents.BorderStyle = BorderStyle.None;
-            dgvAllEvents.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            dgvAllEvents.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvAllEvents.Columns.AddRange(new DataGridViewColumn[] { colEventId, colTitle, colOrganizer, colEventDate, colLocation, colCapacity, colRegistrations, colStatus, colViewDetails });
-            dgvAllEvents.GridColor = Color.FromArgb(217, 223, 234);
-            dgvAllEvents.Location = new Point(18, 210);
-            dgvAllEvents.MultiSelect = false;
-            dgvAllEvents.Name = "dgvAllEvents";
-            dgvAllEvents.ReadOnly = true;
-            dgvAllEvents.RowHeadersVisible = false;
-            dgvAllEvents.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvAllEvents.Size = new Size(960, 420);
-            dgvAllEvents.TabIndex = 4;
-            dgvAllEvents.CellFormatting += dgvAllEvents_CellFormatting;
-            colEventId.HeaderText = "Event ID";
-            colEventId.Name = "colEventId";
-            colTitle.HeaderText = "Title";
-            colTitle.Name = "colTitle";
-            colOrganizer.HeaderText = "Organizer";
-            colOrganizer.Name = "colOrganizer";
-            colEventDate.HeaderText = "Date";
-            colEventDate.Name = "colEventDate";
-            colLocation.HeaderText = "Location";
-            colLocation.Name = "colLocation";
-            colCapacity.HeaderText = "Capacity";
-            colCapacity.Name = "colCapacity";
-            colRegistrations.HeaderText = "Registrations";
-            colRegistrations.Name = "colRegistrations";
-            colStatus.HeaderText = "Status";
-            colStatus.Name = "colStatus";
-            colViewDetails.HeaderText = "View Details";
-            colViewDetails.Name = "colViewDetails";
-            colViewDetails.Text = "View Details";
-            colViewDetails.UseColumnTextForButtonValue = true;
-            lblFooter.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            lblFooter.ForeColor = Color.FromArgb(102, 112, 133);
-            lblFooter.Location = new Point(18, 650);
-            lblFooter.Name = "lblFooter";
-            lblFooter.Size = new Size(960, 32);
-            lblFooter.TabIndex = 5;
-            lblFooter.Text = "HahuEvents | Event Registration Management System";
-            lblFooter.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // btnSearch
+            // 
+            btnSearch.BackColor = Color.FromArgb(36, 87, 197);
+            btnSearch.FlatAppearance.BorderSize = 0;
+            btnSearch.FlatStyle = FlatStyle.Flat;
+            btnSearch.ForeColor = Color.White;
+            btnSearch.Location = new Point(725, 34);
+            btnSearch.Name = "btnSearch";
+            btnSearch.Size = new Size(70, 30);
+            btnSearch.TabIndex = 10;
+            btnSearch.Text = "Search";
+            btnSearch.UseVisualStyleBackColor = false;
+            btnSearch.Click += btnSearch_Click;
+            // 
+            // dtpEndDate
+            // 
+            dtpEndDate.Format = DateTimePickerFormat.Short;
+            dtpEndDate.Location = new Point(605, 35);
+            dtpEndDate.Name = "dtpEndDate";
+            dtpEndDate.ShowCheckBox = true;
+            dtpEndDate.Size = new Size(105, 27);
+            dtpEndDate.TabIndex = 9;
+            // 
+            // lblEndDate
+            // 
+            lblEndDate.AutoSize = true;
+            lblEndDate.Location = new Point(605, 10);
+            lblEndDate.Name = "lblEndDate";
+            lblEndDate.Size = new Size(70, 20);
+            lblEndDate.TabIndex = 8;
+            lblEndDate.Text = "End Date";
+            // 
+            // dtpStartDate
+            // 
+            dtpStartDate.Format = DateTimePickerFormat.Short;
+            dtpStartDate.Location = new Point(490, 35);
+            dtpStartDate.Name = "dtpStartDate";
+            dtpStartDate.ShowCheckBox = true;
+            dtpStartDate.Size = new Size(105, 27);
+            dtpStartDate.TabIndex = 7;
+            // 
+            // lblStartDate
+            // 
+            lblStartDate.AutoSize = true;
+            lblStartDate.Location = new Point(490, 10);
+            lblStartDate.Name = "lblStartDate";
+            lblStartDate.Size = new Size(76, 20);
+            lblStartDate.TabIndex = 6;
+            lblStartDate.Text = "Start Date";
+            // 
+            // cmbStatus
+            // 
+            cmbStatus.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbStatus.FormattingEnabled = true;
+            cmbStatus.Items.AddRange(new object[] { "All", "Draft", "Published", "Cancelled" });
+            cmbStatus.Location = new Point(365, 35);
+            cmbStatus.Name = "cmbStatus";
+            cmbStatus.Size = new Size(110, 28);
+            cmbStatus.TabIndex = 5;
+            // 
+            // lblStatus
+            // 
+            lblStatus.AutoSize = true;
+            lblStatus.Location = new Point(365, 10);
+            lblStatus.Name = "lblStatus";
+            lblStatus.Size = new Size(49, 20);
+            lblStatus.TabIndex = 4;
+            lblStatus.Text = "Status";
+            // 
+            // cmbOrganizer
+            // 
+            cmbOrganizer.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbOrganizer.FormattingEnabled = true;
+            cmbOrganizer.Items.AddRange(new object[] { "All Organizers" });
+            cmbOrganizer.Location = new Point(215, 35);
+            cmbOrganizer.Name = "cmbOrganizer";
+            cmbOrganizer.Size = new Size(135, 28);
+            cmbOrganizer.TabIndex = 3;
+            // 
+            // lblOrganizer
+            // 
+            lblOrganizer.AutoSize = true;
+            lblOrganizer.Location = new Point(215, 10);
+            lblOrganizer.Name = "lblOrganizer";
+            lblOrganizer.Size = new Size(74, 20);
+            lblOrganizer.TabIndex = 2;
+            lblOrganizer.Text = "Organizer";
+            // 
+            // txtSearch
+            // 
+            txtSearch.Location = new Point(10, 35);
+            txtSearch.Name = "txtSearch";
+            txtSearch.PlaceholderText = "Search events...";
+            txtSearch.Size = new Size(190, 27);
+            txtSearch.TabIndex = 1;
+            // 
+            // lblSearch
+            // 
+            lblSearch.AutoSize = true;
+            lblSearch.Location = new Point(10, 10);
+            lblSearch.Name = "lblSearch";
+            lblSearch.Size = new Size(56, 20);
+            lblSearch.TabIndex = 0;
+            lblSearch.Text = "Search:";
+            // 
+            // lblEventCount
+            // 
+            lblEventCount.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lblEventCount.AutoSize = true;
+            lblEventCount.ForeColor = Color.FromArgb(102, 112, 133);
+            lblEventCount.Location = new Point(890, 31);
+            lblEventCount.Name = "lblEventCount";
+            lblEventCount.Size = new Size(98, 20);
+            lblEventCount.TabIndex = 2;
+            lblEventCount.Text = "0 total events";
             // 
             // lblSubtitle
             // 
@@ -380,6 +471,9 @@
             pnlSidebar.PerformLayout();
             pnlMain.ResumeLayout(false);
             pnlMain.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvAllEvents).EndInit();
+            pnlFilters.ResumeLayout(false);
+            pnlFilters.PerformLayout();
             ResumeLayout(false);
         }
 
