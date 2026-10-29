@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using HahuEvents.Desktop.Models;
 using HahuEvents.Desktop.Services;
@@ -10,6 +11,8 @@ namespace HahuEvents.Desktop.Forms
 {
     public partial class OrganizerDashboardForm : Form
     {
+        private readonly InMemoryEventService _eventService = InMemoryEventService.Instance;
+
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int CurrentOrganizerId { get; set; }
 
@@ -18,6 +21,8 @@ namespace HahuEvents.Desktop.Forms
         {
             InitializeComponent();
             ConfigureDashboardAppearance();
+            ConfigureEventContextMenu();
+            Load += OrganizerDashboardForm_Load;
             dgvMyEvents.CellDoubleClick += dgvMyEvents_CellDoubleClick;
 
             // Set initial filter values.
@@ -40,12 +45,58 @@ namespace HahuEvents.Desktop.Forms
             dgvMyEvents.AutoSizeColumnsMode =
                 DataGridViewAutoSizeColumnsMode.Fill;
 
-            // Example summary values for UI testing.
-            // Replace these with real service data later.
-            lblMyEventsCount.Text = "12";
-            lblPublishedEventsCount.Text = "8";
-            lblTotalRegistrations.Text = "103";
-            lblUpcomingEventsCount.Text = "13";
+        }
+
+        private void OrganizerDashboardForm_Load(object? sender, EventArgs e)
+        {
+            LoadOrganizerEvents();
+        }
+
+        private void LoadOrganizerEvents()
+        {
+            dgvMyEvents.Rows.Clear();
+
+            if (CurrentOrganizerId <= 0)
+            {
+                UpdateSummaryCards(Array.Empty<Event>());
+                return;
+            }
+
+            Event[] organizerEvents = _eventService.Events
+                .Where(eventItem => eventItem.OrganizerId == CurrentOrganizerId)
+                .OrderBy(eventItem => eventItem.Date)
+                .ToArray();
+
+            foreach (Event eventItem in organizerEvents)
+            {
+                int rowIndex = dgvMyEvents.Rows.Add(
+                    $"EVT-{eventItem.Id:D3}",
+                    eventItem.Title,
+                    eventItem.Date.ToString("MMM dd, yyyy h:mm tt"),
+                    eventItem.Location,
+                    eventItem.Capacity,
+                    _eventService.GetRegistrationCount(eventItem.Id),
+                    eventItem.Status);
+                dgvMyEvents.Rows[rowIndex].Tag = eventItem;
+            }
+
+            UpdateSummaryCards(organizerEvents);
+            ApplyEventFilters();
+        }
+
+        private void UpdateSummaryCards(IEnumerable<Event> events)
+        {
+            Event[] organizerEvents = events.ToArray();
+            lblMyEventsCount.Text = organizerEvents.Length.ToString();
+            lblPublishedEventsCount.Text = organizerEvents
+                .Count(eventItem => eventItem.Status == EventStatus.Published)
+                .ToString();
+            lblTotalRegistrations.Text = organizerEvents
+                .Sum(eventItem => _eventService.GetRegistrationCount(eventItem.Id))
+                .ToString();
+            lblUpcomingEventsCount.Text = organizerEvents
+                .Count(eventItem => eventItem.Date >= DateTime.Now)
+                .ToString();
         }
 
         private void ConfigureDashboardAppearance()
@@ -70,9 +121,82 @@ namespace HahuEvents.Desktop.Forms
             btnLogout.Padding = new Padding(12, 0, 0, 0);
             btnLogout.Visible = true;
             btnLogout.ForeColor = Color.FromArgb(170, 55, 55);
+
+            dgvMyEvents.Anchor = AnchorStyles.Top | AnchorStyles.Bottom |
+                AnchorStyles.Left | AnchorStyles.Right;
+            dgvMyEvents.Width = pnlMyEvents.ClientSize.Width;
+            dgvMyEvents.Height = pnlMyEvents.ClientSize.Height - dgvMyEvents.Top;
+        }
+
+        private void ConfigureEventContextMenu()
+        {
+            var contextMenu = new ContextMenuStrip(components);
+            var editItem = new ToolStripMenuItem("Edit event");
+            var deleteItem = new ToolStripMenuItem("Delete event");
+
+            editItem.Click += EditSelectedEvent_Click;
+            deleteItem.Click += DeleteSelectedEvent_Click;
+            contextMenu.Items.Add(editItem);
+            contextMenu.Items.Add(deleteItem);
+            contextMenu.Opening += (_, e) =>
+            {
+                e.Cancel = dgvMyEvents.CurrentRow?.Tag is not Event;
+            };
+
+            dgvMyEvents.ContextMenuStrip = contextMenu;
+            dgvMyEvents.MouseDown += dgvMyEvents_MouseDown;
+        }
+
+        private void ShowDashboardView()
+        {
+            pnlSummary.Visible = true;
+            pnlQuickActions.Visible = true;
+            pnlMyEvents.Location = new Point(225, 325);
+            pnlMyEvents.Size = new Size(967, 335);
+            lblDashboardTitle.Text = "Organizer Dashboard";
+            lblSubtitle.Text = "Manage Events and Participants";
+            SetSelectedNavigationButton(btnDashboard);
+        }
+
+        private void ShowMyEventsView()
+        {
+            pnlSummary.Visible = false;
+            pnlQuickActions.Visible = false;
+            pnlMyEvents.Location = new Point(225, 115);
+            pnlMyEvents.Size = new Size(967, 545);
+            lblDashboardTitle.Text = "My Events";
+            lblSubtitle.Text = "View, edit, and manage your events";
+            SetSelectedNavigationButton(btnMyEvents);
+            LoadOrganizerEvents();
+        }
+
+        private void SetSelectedNavigationButton(Button selectedButton)
+        {
+            Color selectedColor = Color.FromArgb(36, 87, 197);
+            Color idleTextColor = Color.FromArgb(91, 111, 145);
+
+            foreach (Button button in new[]
+            {
+                btnDashboard,
+                btnMyEvents,
+                btnCreateEvent,
+                btnRegistrations,
+                btnAttendance,
+                btnMyReports
+            })
+            {
+                bool selected = button == selectedButton;
+                button.BackColor = selected ? selectedColor : Color.White;
+                button.ForeColor = selected ? Color.White : idleTextColor;
+            }
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
+        {
+            ApplyEventFilters();
+        }
+
+        private void ApplyEventFilters()
         {
             string searchText = txtSearchEvent.Text.Trim();
             string selectedStatus = cmbStatusFilter.Text;
@@ -111,26 +235,49 @@ namespace HahuEvents.Desktop.Forms
         {
             txtSearchEvent.Clear();
             cmbStatusFilter.SelectedIndex = 0;
-
-            foreach (DataGridViewRow row in dgvMyEvents.Rows)
-            {
-                row.Visible = true;
-            }
+            ApplyEventFilters();
         }
 
         private void btnCreateEvent_Click(object sender, EventArgs e)
         {
-            // Connect this button to EventForm when it is implemented.
-            MessageBox.Show(
-                "The Create Event form will open here.",
-                "Create Event",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+            if (CurrentOrganizerId <= 0)
+            {
+                MessageBox.Show("Please log in as an Organizer.");
+                return;
+            }
+
+            using var eventForm = new OrganizerEventForm(CurrentOrganizerId);
+            if (eventForm.ShowDialog(this) == DialogResult.OK &&
+                eventForm.SavedEvent is Event savedEvent)
+            {
+                _eventService.SaveEvent(savedEvent);
+                LoadOrganizerEvents();
+            }
         }
 
         private void btnMyEvents_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("You are viewing My Events.");
+            ShowMyEventsView();
+        }
+
+        private void dgvMyEvents_MouseDown(object? sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right)
+            {
+                return;
+            }
+
+            DataGridView.HitTestInfo hit = dgvMyEvents.HitTest(e.X, e.Y);
+            if (hit.RowIndex < 0)
+            {
+                dgvMyEvents.ClearSelection();
+                dgvMyEvents.CurrentCell = null;
+                return;
+            }
+
+            dgvMyEvents.ClearSelection();
+            dgvMyEvents.Rows[hit.RowIndex].Selected = true;
+            dgvMyEvents.CurrentCell = dgvMyEvents.Rows[hit.RowIndex].Cells[0];
         }
 
         private void btnRegistrations_Click(object sender, EventArgs e)
@@ -158,11 +305,75 @@ namespace HahuEvents.Desktop.Forms
                 return;
             }
 
+            if (selectedEvent.OrganizerId != CurrentOrganizerId)
+            {
+                MessageBox.Show("You can only view your own events.");
+                return;
+            }
+
             MessageBox.Show(
-                $"{selectedEvent.Title}\n{selectedEvent.Date:d}\n{selectedEvent.Location}",
+                $"Event ID: EVT-{selectedEvent.Id:D3}\n" +
+                $"Date: {selectedEvent.Date:MMM dd, yyyy h:mm tt}\n" +
+                $"Location: {selectedEvent.Location}\n" +
+                $"Capacity: {selectedEvent.Capacity}\n" +
+                $"Registrations: {_eventService.GetRegistrationCount(selectedEvent.Id)}\n" +
+                $"Status: {selectedEvent.Status}\n\n" +
+                selectedEvent.Description,
                 "Event Details",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
+        }
+
+        private Event? GetSelectedEvent()
+        {
+            if (dgvMyEvents.CurrentRow?.Tag is not Event selectedEvent ||
+                selectedEvent.OrganizerId != CurrentOrganizerId)
+            {
+                return null;
+            }
+
+            return selectedEvent;
+        }
+
+        private void EditSelectedEvent_Click(object? sender, EventArgs e)
+        {
+            Event? selectedEvent = GetSelectedEvent();
+            if (selectedEvent == null)
+            {
+                return;
+            }
+
+            using var eventForm = new OrganizerEventForm(
+                CurrentOrganizerId,
+                selectedEvent);
+
+            if (eventForm.ShowDialog(this) == DialogResult.OK &&
+                eventForm.SavedEvent is Event updatedEvent)
+            {
+                _eventService.SaveEvent(updatedEvent);
+                LoadOrganizerEvents();
+            }
+        }
+
+        private void DeleteSelectedEvent_Click(object? sender, EventArgs e)
+        {
+            Event? selectedEvent = GetSelectedEvent();
+            if (selectedEvent == null)
+            {
+                return;
+            }
+
+            DialogResult result = MessageBox.Show(
+                $"Delete '{selectedEvent.Title}'? This cannot be undone.",
+                "Delete Event",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes &&
+                _eventService.DeleteEvent(selectedEvent.Id, CurrentOrganizerId))
+            {
+                LoadOrganizerEvents();
+            }
         }
 
         private void btnAttendance_Click(object sender, EventArgs e)
@@ -194,7 +405,7 @@ namespace HahuEvents.Desktop.Forms
 
         private void btnDashboard_Click(object sender, EventArgs e)
         {
-            // Already on the dashboard.
+            ShowDashboardView();
         }
     }
 }

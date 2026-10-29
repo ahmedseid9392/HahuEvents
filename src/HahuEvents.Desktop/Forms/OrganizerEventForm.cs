@@ -10,8 +10,6 @@ namespace HahuEvents.Desktop.Forms
         private readonly int _organizerId;
         private readonly Event? _existingEvent;
 
-        private static int _nextEventId = 1;
-
         public Event? SavedEvent { get; private set; }
 
         // Required for the Visual Studio Designer.
@@ -140,7 +138,6 @@ namespace HahuEvents.Desktop.Forms
 
             Event result = _existingEvent ?? new Event
             {
-                Id = _nextEventId++,
                 OrganizerId = _organizerId
             };
 
