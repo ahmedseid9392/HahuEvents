@@ -7,7 +7,9 @@ namespace HahuEvents.Desktop.Forms
 {
     public partial class OrganizerDashboardForm : Form
     {
-        private readonly int _currentOrganizerId;
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public int CurrentOrganizerId { get; set; }
+
         public OrganizerDashboardForm()
 
         {
