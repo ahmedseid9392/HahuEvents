@@ -1,7 +1,10 @@
 ﻿
 using System;
+using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
 using HahuEvents.Desktop.Models;
+using HahuEvents.Desktop.Services;
 
 namespace HahuEvents.Desktop.Forms
 {
@@ -14,6 +17,8 @@ namespace HahuEvents.Desktop.Forms
 
         {
             InitializeComponent();
+            ConfigureDashboardAppearance();
+            dgvMyEvents.CellDoubleClick += dgvMyEvents_CellDoubleClick;
 
             // Set initial filter values.
             cmbStatusFilter.Items.AddRange(new object[]
@@ -41,6 +46,30 @@ namespace HahuEvents.Desktop.Forms
             lblPublishedEventsCount.Text = "8";
             lblTotalRegistrations.Text = "103";
             lblUpcomingEventsCount.Text = "13";
+        }
+
+        private void ConfigureDashboardAppearance()
+        {
+            Color canvasColor = Color.FromArgb(245, 247, 251);
+
+            BackColor = canvasColor;
+            pnlSidebar.BackColor = Color.White;
+            pnlHeader.BackColor = canvasColor;
+            pnlSummary.BackColor = canvasColor;
+            pnlQuickActions.BackColor = canvasColor;
+            pnlMyEvents.BackColor = Color.White;
+
+            lblDashboardTitle.Font = new Font(
+                "Segoe UI", 18F, FontStyle.Bold);
+            lblDashboardTitle.Location = new Point(20, 14);
+            lblDashboardTitle.Size = new Size(600, 36);
+            lblSubtitle.Location = new Point(22, 52);
+
+            btnLogout.Dock = DockStyle.Bottom;
+            btnLogout.Height = 48;
+            btnLogout.Padding = new Padding(12, 0, 0, 0);
+            btnLogout.Visible = true;
+            btnLogout.ForeColor = Color.FromArgb(170, 55, 55);
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -116,14 +145,25 @@ namespace HahuEvents.Desktop.Forms
             if (e.RowIndex < 0)
                 return;
 
-            if (_currentOrganizerId <= 0)
+            if (CurrentOrganizerId <= 0)
             {
                 MessageBox.Show("Please log in as an Organizer.");
                 return;
             }
 
             var row = dgvMyEvents.Rows[e.RowIndex];
-            Event? selectedEvent = row.Tag as Event;
+            if (row.Tag is not Event selectedEvent)
+            {
+                MessageBox.Show("Event details are unavailable.");
+                return;
+            }
+
+            MessageBox.Show(
+                $"{selectedEvent.Title}\n{selectedEvent.Date:d}\n{selectedEvent.Location}",
+                "Event Details",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+        }
 
         private void btnAttendance_Click(object sender, EventArgs e)
         {
@@ -147,7 +187,7 @@ namespace HahuEvents.Desktop.Forms
 
             if (result == DialogResult.Yes)
             {
-                // Replace with your authentication/session logout logic.
+                AuthService.Logout();
                 Close();
             }
         }

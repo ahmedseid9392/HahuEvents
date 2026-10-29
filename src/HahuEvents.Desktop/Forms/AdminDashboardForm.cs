@@ -21,6 +21,41 @@ namespace HahuEvents.Desktop.Forms
         {
             InitializeComponent();
             ConfigureDashboardFilters();
+            ConfigureDashboardAppearance();
+            button5.Click += button5_Click;
+        }
+
+        private void ConfigureDashboardAppearance()
+        {
+            Color canvasColor = Color.FromArgb(245, 247, 251);
+            Color surfaceColor = Color.White;
+
+            BackColor = canvasColor;
+            pnlSidebar.BackColor = surfaceColor;
+            pnlHeader.BackColor = canvasColor;
+            pnlContent.BackColor = canvasColor;
+            pnlSummaryCards.BackColor = canvasColor;
+            pnlALLEvents.BackColor = surfaceColor;
+
+            panel1.BackColor = surfaceColor;
+            panel2.BackColor = surfaceColor;
+            panel3.BackColor = surfaceColor;
+            panel4.BackColor = surfaceColor;
+
+            label2.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
+            label2.Location = new Point(16, 5);
+            label2.Size = new Size(420, 36);
+            label3.Location = new Point(16, 46);
+
+            button5.Text = "Logout";
+            button5.Dock = DockStyle.Bottom;
+            button5.Height = 44;
+            button5.Padding = new Padding(12, 0, 0, 0);
+            button5.Visible = true;
+            button5.Cursor = Cursors.Hand;
+            button5.FlatAppearance.BorderSize = 0;
+            button5.ForeColor = Color.FromArgb(170, 55, 55);
+            button5.TextAlign = ContentAlignment.MiddleLeft;
         }
 
         private void ConfigureDashboardFilters()
@@ -195,6 +230,21 @@ namespace HahuEvents.Desktop.Forms
             ShowDashboardView();
         }
 
+        private void button5_Click(object? sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show(
+                "Are you sure you want to log out?",
+                "Confirm Logout",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                AuthService.Logout();
+                Close();
+            }
+        }
+
         private void label1_Click(object sender, EventArgs e)
         {
             ShowDashboardView();
@@ -202,6 +252,7 @@ namespace HahuEvents.Desktop.Forms
 
         private void label2_Click(object sender, EventArgs e)
         {
+            ShowDashboardView();
         }
 
         private void panel2_Click(object sender, EventArgs e)
@@ -217,14 +268,6 @@ namespace HahuEvents.Desktop.Forms
         private void label10_Click(object sender, EventArgs e)
         {
             ShowAllEventsView();
-        }
-
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -282,6 +325,32 @@ namespace HahuEvents.Desktop.Forms
 
         private void dgvAllEvents_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex < 0 ||
+                dgvAllEvents.Columns[e.ColumnIndex].Name != "colViewDetails")
+            {
+                return;
+            }
+
+            string eventId = dgvAllEvents.Rows[e.RowIndex]
+                .Cells["colEventId"].Value?.ToString() ?? string.Empty;
+            Event? selectedEvent = _dashboardEvents.FirstOrDefault(row =>
+                $"EVT-{row.Id:D3}" == eventId);
+
+            if (selectedEvent == null)
+            {
+                return;
+            }
+
+            MessageBox.Show(
+                $"Organizer: {_eventService.GetOrganizerName(selectedEvent.OrganizerId)}\n" +
+                $"Date: {selectedEvent.Date:MMM dd, yyyy}\n" +
+                $"Location: {selectedEvent.Location}\n" +
+                $"Capacity: {selectedEvent.Capacity}\n" +
+                $"Registrations: {_eventService.GetRegistrationCount(selectedEvent.Id)}\n" +
+                $"Status: {selectedEvent.Status}",
+                selectedEvent.Title,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
         }
     }
 }

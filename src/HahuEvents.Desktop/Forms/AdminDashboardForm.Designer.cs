@@ -219,7 +219,6 @@ namespace HahuEvents.Desktop.Forms
             pnlHeader.Name = "pnlHeader";
             pnlHeader.Size = new Size(962, 80);
             pnlHeader.TabIndex = 1;
-            pnlHeader.Paint += panel2_Paint;
             // 
             // label4
             // 

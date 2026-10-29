@@ -9,37 +9,35 @@ namespace HahuEvents.Desktop.Services
 {
     public static class AuthService
     {
-        private static readonly List<User> Users = new();
-        private static int _nextId = 1;
-
         private const int Iterations = 100_000;
         private const int SaltSize = 16;
         private const int HashSize = 32;
 
-        public static User CurrentUser { get; private set; }
-
-        static AuthService()
+        private static readonly List<User> Users = new()
         {
-            Users.Add(new User
+            new User
             {
                 Id = 6,
                 FullName = "System Administrator",
                 Username = "admin",
                 PasswordHash = HashPassword("Admin123!"),
                 Role = UserRole.Administrator
-            });
-
-            Users.Add(new User
+            },
+            new User
             {
                 Id = 1,
                 FullName = "Nile Business Hub",
                 Username = "organizer",
                 PasswordHash = HashPassword("Organizer123!"),
                 Role = UserRole.Organizer
-            });
+            }
+        };
 
-            _nextId = 7;
-        }
+        private static int _nextId = 7;
+        private static User? _currentUser;
+
+        public static User CurrentUser => _currentUser
+            ?? throw new InvalidOperationException("No user is currently logged in.");
 
         public static bool RegisterOrganizer(
             string fullName,
@@ -91,7 +89,7 @@ namespace HahuEvents.Desktop.Services
             string password,
             out string message)
         {
-            User user = Users.FirstOrDefault(u =>
+            User? user = Users.FirstOrDefault(u =>
                 u.Username.Equals(
                     username.Trim(),
                     StringComparison.OrdinalIgnoreCase));
@@ -109,14 +107,14 @@ namespace HahuEvents.Desktop.Services
                 return false;
             }
 
-            CurrentUser = user;
+            _currentUser = user;
             message = "Login successful.";
             return true;
         }
 
         public static void Logout()
         {
-            CurrentUser = null;
+            _currentUser = null;
         }
 
         private static string HashPassword(string password)
