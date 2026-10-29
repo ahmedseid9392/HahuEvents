@@ -12,8 +12,6 @@ namespace HahuEvents.Desktop.Forms
 
         {
             InitializeComponent();
-            dgvMyEvents.CellDoubleClick +=
-                dgvMyEvents_CellDoubleClick;
 
             // Set initial filter values.
             cmbStatusFilter.Items.AddRange(new object[]
@@ -41,19 +39,6 @@ namespace HahuEvents.Desktop.Forms
             lblPublishedEventsCount.Text = "8";
             lblTotalRegistrations.Text = "103";
             lblUpcomingEventsCount.Text = "13";
-        }
-
-        public OrganizerDashboardForm(int organizerId)
-            : this()
-        {
-            if (organizerId <= 0)
-            {
-                throw new ArgumentOutOfRangeException(
-                    nameof(organizerId),
-                    "A valid organizer ID is required.");
-            }
-
-            _currentOrganizerId = organizerId;
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -104,30 +89,23 @@ namespace HahuEvents.Desktop.Forms
 
         private void btnCreateEvent_Click(object sender, EventArgs e)
         {
-            if (_currentOrganizerId <= 0)
-            {
-                MessageBox.Show("Please log in as an Organizer first.");
-                return;
-            }
+            // Connect this button to EventForm when it is implemented.
+            MessageBox.Show(
+                "The Create Event form will open here.",
+                "Create Event",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+        }
 
-            using (var form = new OrganizerEventForm(_currentOrganizerId))
-            {
-                if (form.ShowDialog(this) == DialogResult.OK &&
-                    form.SavedEvent is Event ev)
-                {
-                    int rowIndex = dgvMyEvents.Rows.Add(
-                        ev.Id,
-                        ev.Title,
-                        ev.Date.ToString("dd/MM/yyyy HH:mm"),
-                        ev.Location,
-                        ev.Capacity,
-                        0,
-                        ev.Status.ToString());
+        private void btnMyEvents_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("You are viewing My Events.");
+        }
 
-                    // Keep the event object available for editing.
-                    dgvMyEvents.Rows[rowIndex].Tag = ev;
-                }
-            }
+        private void btnRegistrations_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(
+                "Connect this button to RegistrationsForm.");
         }
         private void dgvMyEvents_CellDoubleClick(
     object? sender,
@@ -144,49 +122,6 @@ namespace HahuEvents.Desktop.Forms
 
             var row = dgvMyEvents.Rows[e.RowIndex];
             Event? selectedEvent = row.Tag as Event;
-
-            if (selectedEvent == null)
-            {
-                MessageBox.Show(
-                    "This event has no editable event object attached.");
-                return;
-            }
-
-            if (selectedEvent.OrganizerId != _currentOrganizerId)
-            {
-                MessageBox.Show(
-                    "You can only edit your own events.");
-                return;
-            }
-
-            using (var form = new OrganizerEventForm(
-                _currentOrganizerId, selectedEvent))
-            {
-                if (form.ShowDialog(this) == DialogResult.OK &&
-                    form.SavedEvent is Event updated)
-                {
-                    row.Cells["EventTitle"].Value = updated.Title;
-                    row.Cells["EventDate"].Value =
-                        updated.Date.ToString("dd/MM/yyyy HH:mm");
-                    row.Cells["Location"].Value = updated.Location;
-                    row.Cells["Capacity"].Value = updated.Capacity;
-                    row.Cells["Status"].Value = updated.Status.ToString();
-                }
-            }
-        }
-
-
-
-        private void btnMyEvents_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("You are viewing My Events.");
-        }
-
-        private void btnRegistrations_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(
-                "Connect this button to RegistrationsForm.");
-        }
 
         private void btnAttendance_Click(object sender, EventArgs e)
         {
