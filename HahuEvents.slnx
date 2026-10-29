@@ -1,2 +1,5 @@
 <Solution>
+  <Folder Name="/src/">
+    <Project Path="src/HahuEvents.Desktop/HahuEvents.Desktop.csproj" />
+  </Folder>
 </Solution>
