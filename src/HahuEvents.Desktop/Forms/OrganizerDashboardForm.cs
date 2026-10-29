@@ -1,14 +1,21 @@
 ﻿
 using System;
 using System.Windows.Forms;
+using HahuEvents.Desktop.Models;
 
 namespace HahuEvents.Desktop.Forms
 {
     public partial class OrganizerDashboardForm : Form
     {
+        public int CurrentOrganizerId { get; set; }
         public OrganizerDashboardForm()
+
         {
-            InitializeComponent();
+           InitializeComponent();
+            dgvMyEvents.CellDoubleClick +=
+            dgvMyEvents_CellDoubleClick;
+
+
 
             // Set initial filter values.
             cmbStatusFilter.Items.AddRange(new object[]
@@ -86,13 +93,80 @@ namespace HahuEvents.Desktop.Forms
 
         private void btnCreateEvent_Click(object sender, EventArgs e)
         {
-            // Connect this button to EventForm when it is implemented.
-            MessageBox.Show(
-                "The Create Event form will open here.",
-                "Create Event",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+            if (CurrentOrganizerId <= 0)
+            {
+                MessageBox.Show("Please log in as an Organizer first.");
+                return;
+            }
+
+            using (var form = new OrganizerEventForm(CurrentOrganizerId))
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                {
+                    Event ev = form.SavedEvent;
+
+                    int rowIndex = dgvMyEvents.Rows.Add(
+                        ev.Id,
+                        ev.Title,
+                        ev.Date.ToString("dd/MM/yyyy HH:mm"),
+                        ev.Location,
+                        ev.Capacity,
+                        0,
+                        ev.Status.ToString());
+
+                    // Keep the event object available for editing.
+                    dgvMyEvents.Rows[rowIndex].Tag = ev;
+                }
+            }
         }
+        private void dgvMyEvents_CellDoubleClick(
+    object sender,
+    DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0)
+                return;
+
+            if (CurrentOrganizerId <= 0)
+            {
+                MessageBox.Show("Please log in as an Organizer.");
+                return;
+            }
+
+            var row = dgvMyEvents.Rows[e.RowIndex];
+            Event selectedEvent = row.Tag as Event;
+
+            if (selectedEvent == null)
+            {
+                MessageBox.Show(
+                    "This event has no editable event object attached.");
+                return;
+            }
+
+            if (selectedEvent.OrganizerId != CurrentOrganizerId)
+            {
+                MessageBox.Show(
+                    "You can only edit your own events.");
+                return;
+            }
+
+            using (var form = new OrganizerEventForm(
+                CurrentOrganizerId, selectedEvent))
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                {
+                    Event updated = form.SavedEvent;
+
+                    row.Cells["EventTitle"].Value = updated.Title;
+                    row.Cells["EventDate"].Value =
+                        updated.Date.ToString("dd/MM/yyyy HH:mm");
+                    row.Cells["Location"].Value = updated.Location;
+                    row.Cells["Capacity"].Value = updated.Capacity;
+                    row.Cells["Status"].Value = updated.Status.ToString();
+                }
+            }
+        }
+
+
 
         private void btnMyEvents_Click(object sender, EventArgs e)
         {
