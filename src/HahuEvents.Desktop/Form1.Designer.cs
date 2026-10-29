@@ -28,11 +28,39 @@ partial class Form1
     /// </summary>
     private void InitializeComponent()
     {
-        components = new System.ComponentModel.Container();
+        panel1 = new Panel();
+        panel2 = new Panel();
+        SuspendLayout();
+        // 
+        // panel1
+        // 
+        panel1.BorderStyle = BorderStyle.FixedSingle;
+        panel1.Location = new Point(12, 12);
+        panel1.Name = "panel1";
+        panel1.Size = new Size(318, 426);
+        panel1.TabIndex = 0;
+        // 
+        // panel2
+        // 
+        panel2.Location = new Point(366, 12);
+        panel2.Name = "panel2";
+        panel2.Size = new Size(405, 426);
+        panel2.TabIndex = 1;
+        // 
+        // Form1
+        // 
+        AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(800, 450);
+        ClientSize = new Size(1184, 711);
+        Controls.Add(panel2);
+        Controls.Add(panel1);
+        Name = "Form1";
         Text = "Form1";
+        ResumeLayout(false);
     }
 
     #endregion
+
+    private Panel panel1;
+    private Panel panel2;
 }
