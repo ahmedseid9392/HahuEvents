@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Windows.Forms;
+using HahuEvents.Desktop.Models;
 
 namespace HahuEvents.Desktop.Forms
 {
@@ -10,6 +11,7 @@ namespace HahuEvents.Desktop.Forms
         public int CurrentOrganizerId { get; set; }
 
         public OrganizerDashboardForm()
+
         {
             InitializeComponent();
 
@@ -107,6 +109,21 @@ namespace HahuEvents.Desktop.Forms
             MessageBox.Show(
                 "Connect this button to RegistrationsForm.");
         }
+        private void dgvMyEvents_CellDoubleClick(
+    object? sender,
+    DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0)
+                return;
+
+            if (_currentOrganizerId <= 0)
+            {
+                MessageBox.Show("Please log in as an Organizer.");
+                return;
+            }
+
+            var row = dgvMyEvents.Rows[e.RowIndex];
+            Event? selectedEvent = row.Tag as Event;
 
         private void btnAttendance_Click(object sender, EventArgs e)
         {
