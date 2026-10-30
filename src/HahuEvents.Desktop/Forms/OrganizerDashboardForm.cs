@@ -12,6 +12,7 @@ namespace HahuEvents.Desktop.Forms
     public partial class OrganizerDashboardForm : Form
     {
         private readonly InMemoryEventService _eventService = InMemoryEventService.Instance;
+        private Panel? _mockSectionPanel;
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int CurrentOrganizerId { get; set; }
@@ -153,6 +154,11 @@ namespace HahuEvents.Desktop.Forms
             pnlQuickActions.Visible = true;
             pnlMyEvents.Location = new Point(225, 325);
             pnlMyEvents.Size = new Size(967, 335);
+            pnlMyEvents.Visible = true;
+            if (_mockSectionPanel != null)
+            {
+                _mockSectionPanel.Visible = false;
+            }
             lblDashboardTitle.Text = "Organizer Dashboard";
             lblSubtitle.Text = "Manage Events and Participants";
             SetSelectedNavigationButton(btnDashboard);
@@ -164,10 +170,124 @@ namespace HahuEvents.Desktop.Forms
             pnlQuickActions.Visible = false;
             pnlMyEvents.Location = new Point(225, 115);
             pnlMyEvents.Size = new Size(967, 545);
+            pnlMyEvents.Visible = true;
+            if (_mockSectionPanel != null)
+            {
+                _mockSectionPanel.Visible = false;
+            }
             lblDashboardTitle.Text = "My Events";
             lblSubtitle.Text = "View, edit, and manage your events";
             SetSelectedNavigationButton(btnMyEvents);
             LoadOrganizerEvents();
+        }
+
+        private void ShowMockSection(
+            string title,
+            string subtitle,
+            Button selectedButton,
+            string[] columns,
+            string[][] rows,
+            string? actionText = null)
+        {
+            pnlSummary.Visible = false;
+            pnlQuickActions.Visible = false;
+            pnlMyEvents.Visible = false;
+
+            _mockSectionPanel ??= new Panel
+            {
+                Location = new Point(225, 115),
+                Size = new Size(967, 545),
+                BackColor = Color.White,
+                Anchor = AnchorStyles.Top | AnchorStyles.Bottom |
+                    AnchorStyles.Left | AnchorStyles.Right
+            };
+
+            if (_mockSectionPanel.Parent == null)
+            {
+                Controls.Add(_mockSectionPanel);
+            }
+
+            _mockSectionPanel.Controls.Clear();
+            _mockSectionPanel.Controls.Add(new Label
+            {
+                Text = title,
+                Location = new Point(24, 20),
+                Size = new Size(600, 32),
+                Font = new Font("Segoe UI", 16F, FontStyle.Bold),
+                ForeColor = Color.FromArgb(36, 54, 82)
+            });
+            _mockSectionPanel.Controls.Add(new Label
+            {
+                Text = subtitle,
+                Location = new Point(26, 56),
+                Size = new Size(700, 24),
+                Font = new Font("Segoe UI", 9F),
+                ForeColor = Color.FromArgb(91, 111, 145)
+            });
+
+            if (!string.IsNullOrWhiteSpace(actionText))
+            {
+                var actionButton = new Button
+                {
+                    Text = actionText,
+                    Location = new Point(760, 24),
+                    Size = new Size(180, 36),
+                    BackColor = Color.FromArgb(36, 87, 197),
+                    ForeColor = Color.White,
+                    FlatStyle = FlatStyle.Flat
+                };
+                actionButton.FlatAppearance.BorderSize = 0;
+                actionButton.Click += (_, _) => MessageBox.Show(
+                    "Participant registration is a mock preview and is not connected yet.",
+                    "Mock Preview",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                _mockSectionPanel.Controls.Add(actionButton);
+            }
+
+            var mockGrid = new DataGridView
+            {
+                Location = new Point(24, 100),
+                Size = new Size(916, 390),
+                Anchor = AnchorStyles.Top | AnchorStyles.Bottom |
+                    AnchorStyles.Left | AnchorStyles.Right,
+                BackgroundColor = Color.White,
+                BorderStyle = BorderStyle.FixedSingle,
+                AllowUserToAddRows = false,
+                AllowUserToDeleteRows = false,
+                ReadOnly = true,
+                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
+                SelectionMode = DataGridViewSelectionMode.FullRowSelect,
+                MultiSelect = false,
+                RowHeadersVisible = false
+            };
+
+            foreach (string column in columns)
+            {
+                mockGrid.Columns.Add(column, column);
+            }
+
+            foreach (string[] row in rows)
+            {
+                mockGrid.Rows.Add(row);
+            }
+
+            _mockSectionPanel.Controls.Add(mockGrid);
+            _mockSectionPanel.Controls.Add(new Label
+            {
+                Text = "Mock preview — sample data only; actions are not connected.",
+                Location = new Point(26, 502),
+                Size = new Size(700, 22),
+                Font = new Font("Segoe UI", 8F, FontStyle.Italic),
+                ForeColor = Color.FromArgb(102, 112, 133),
+                Anchor = AnchorStyles.Left | AnchorStyles.Bottom
+            });
+
+            lblDashboardTitle.Text = title;
+            lblSubtitle.Text = subtitle;
+            SetSelectedNavigationButton(selectedButton);
+            _mockSectionPanel.Visible = true;
+            _mockSectionPanel.BringToFront();
         }
 
         private void SetSelectedNavigationButton(Button selectedButton)
@@ -251,7 +371,7 @@ namespace HahuEvents.Desktop.Forms
                 eventForm.SavedEvent is Event savedEvent)
             {
                 _eventService.SaveEvent(savedEvent);
-                LoadOrganizerEvents();
+                ShowMyEventsView();
             }
         }
 
@@ -282,8 +402,27 @@ namespace HahuEvents.Desktop.Forms
 
         private void btnRegistrations_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(
-                "Connect this button to RegistrationsForm.");
+            string eventTitle = GetMockEventTitle();
+            ShowMockSection(
+                "Participant Registrations",
+                "Review registrations and preview participant management.",
+                btnRegistrations,
+                new[] { "Event", "Participant", "Email", "Registered", "Status" },
+                new[]
+                {
+                    new[] { eventTitle, "Dawit Bekele", "dawit@example.com", "Oct 18, 2026", "Active" },
+                    new[] { eventTitle, "Marta Alemu", "marta@example.com", "Oct 20, 2026", "Active" },
+                    new[] { eventTitle, "Samuel Tesfaye", "samuel@example.com", "Oct 22, 2026", "Pending" }
+                },
+                "Register Participant");
+        }
+
+        private string GetMockEventTitle()
+        {
+            return _eventService.Events
+                .FirstOrDefault(eventItem =>
+                    eventItem.OrganizerId == CurrentOrganizerId)?.Title
+                ?? "Sample Event";
         }
         private void dgvMyEvents_CellDoubleClick(
     object? sender,
@@ -378,14 +517,34 @@ namespace HahuEvents.Desktop.Forms
 
         private void btnAttendance_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(
-                "Connect this button to AttendanceForm.");
+            string eventTitle = GetMockEventTitle();
+            ShowMockSection(
+                "Attendance",
+                "Preview attendee check-in for your events.",
+                btnAttendance,
+                new[] { "Event", "Participant", "Email", "Attendance", "Check-in time" },
+                new[]
+                {
+                    new[] { eventTitle, "Dawit Bekele", "dawit@example.com", "Present", "09:05 AM" },
+                    new[] { eventTitle, "Marta Alemu", "marta@example.com", "Not checked in", "—" },
+                    new[] { eventTitle, "Samuel Tesfaye", "samuel@example.com", "Present", "09:24 AM" }
+                });
         }
 
         private void btnMyReports_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(
-                "Connect this button to MyReportsForm.");
+            string eventTitle = GetMockEventTitle();
+            ShowMockSection(
+                "My Reports",
+                "Preview event registration and attendance summaries.",
+                btnMyReports,
+                new[] { "Event", "Registrations", "Attended", "Attendance rate", "Status" },
+                new[]
+                {
+                    new[] { eventTitle, "245", "186", "76%", "Published" },
+                    new[] { "Entrepreneurs Forum", "198", "142", "72%", "Published" },
+                    new[] { "Leadership Summit", "327", "251", "77%", "Published" }
+                });
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
