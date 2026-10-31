@@ -7,7 +7,10 @@ namespace HahuEvents.Desktop.Services
         private readonly List<Event> _events;
         private readonly List<User> _organizers;
         private readonly List<Registration> _registrations;
+        private readonly List<Participant> _participants;
         private int _nextEventId;
+        private int _nextParticipantId;
+        private int _nextRegistrationId;
 
         public static InMemoryEventService Instance { get; } = new();
 
@@ -38,6 +41,10 @@ namespace HahuEvents.Desktop.Services
 
             _nextEventId = _events.Max(eventItem => eventItem.Id) + 1;
             _registrations = SeedRegistrations(new[] { 245, 198, 0, 273, 412, 38, 24, 327 });
+            _participants = new List<Participant>();
+            _nextParticipantId = _registrations.Max(
+                registration => registration.ParticipantId) + 1;
+            _nextRegistrationId = _registrations.Count + 1;
         }
 
         public Event SaveEvent(Event eventToSave)
@@ -86,6 +93,130 @@ namespace HahuEvents.Desktop.Services
         {
             return _registrations.Count(registration =>
                 registration.EventId == eventId && registration.Status == RegistrationStatus.Active);
+        }
+
+        public IReadOnlyList<Registration> GetRegistrationsForEvent(
+            int eventId,
+            int organizerId)
+        {
+            if (!_events.Any(eventItem =>
+                eventItem.Id == eventId &&
+                eventItem.OrganizerId == organizerId))
+            {
+                return Array.Empty<Registration>();
+            }
+
+            return _registrations
+                .Where(registration =>
+                    registration.EventId == eventId &&
+                    registration.Status == RegistrationStatus.Active)
+                .OrderByDescending(registration => registration.RegistrationDate)
+                .ToArray();
+        }
+
+        public Participant? GetParticipant(int participantId)
+        {
+            return _participants.FirstOrDefault(
+                participant => participant.Id == participantId);
+        }
+
+        public bool SetAttendanceStatus(
+            int eventId,
+            int organizerId,
+            int registrationId,
+            AttendanceStatus attendanceStatus)
+        {
+            bool ownsEvent = _events.Any(eventItem =>
+                eventItem.Id == eventId &&
+                eventItem.OrganizerId == organizerId);
+            if (!ownsEvent)
+            {
+                return false;
+            }
+
+            Registration? registration = _registrations.FirstOrDefault(item =>
+                item.Id == registrationId &&
+                item.EventId == eventId &&
+                item.Status == RegistrationStatus.Active);
+            if (registration == null)
+            {
+                return false;
+            }
+
+            registration.AttendanceStatus = attendanceStatus;
+            return true;
+        }
+
+        public bool RegisterParticipant(
+            int eventId,
+            int organizerId,
+            string fullName,
+            string email,
+            string phone,
+            out string message)
+        {
+            Event? eventItem = _events.FirstOrDefault(item =>
+                item.Id == eventId && item.OrganizerId == organizerId);
+
+            if (eventItem == null)
+            {
+                message = "The selected event is unavailable.";
+                return false;
+            }
+
+            if (eventItem.Status != EventStatus.Published)
+            {
+                message = "Participants can only register for published events.";
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(fullName) ||
+                string.IsNullOrWhiteSpace(email))
+            {
+                message = "Participant name and email are required.";
+                return false;
+            }
+
+            string normalizedEmail = email.Trim();
+            bool alreadyRegistered = _registrations
+                .Where(registration =>
+                    registration.EventId == eventId &&
+                    registration.Status == RegistrationStatus.Active)
+                .Select(registration => GetParticipant(registration.ParticipantId))
+                .Any(participant => participant?.Email.Equals(
+                    normalizedEmail,
+                    StringComparison.OrdinalIgnoreCase) == true);
+
+            if (alreadyRegistered)
+            {
+                message = "This participant is already registered for the event.";
+                return false;
+            }
+
+            if (GetRegistrationCount(eventId) >= eventItem.Capacity)
+            {
+                message = "This event has reached its registration capacity.";
+                return false;
+            }
+
+            var participant = new Participant
+            {
+                Id = _nextParticipantId++,
+                FullName = fullName.Trim(),
+                Email = normalizedEmail,
+                Phone = phone.Trim()
+            };
+
+            _participants.Add(participant);
+            _registrations.Add(new Registration
+            {
+                Id = _nextRegistrationId++,
+                EventId = eventId,
+                ParticipantId = participant.Id
+            });
+
+            message = "Participant registered successfully.";
+            return true;
         }
 
         private static List<Registration> SeedRegistrations(IReadOnlyList<int> counts)

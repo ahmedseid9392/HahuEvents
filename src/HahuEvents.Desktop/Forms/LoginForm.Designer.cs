@@ -15,7 +15,6 @@ namespace HahuEvents.Desktop.Forms
         private System.Windows.Forms.CheckBox chkShowPassword;
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.Button btnOpenRegister;
-        private System.Windows.Forms.Label lblFooter;
 
         protected override void Dispose(bool disposing)
         {
@@ -38,12 +37,11 @@ namespace HahuEvents.Desktop.Forms
             chkShowPassword = new System.Windows.Forms.CheckBox();
             btnLogin = new System.Windows.Forms.Button();
             btnOpenRegister = new System.Windows.Forms.Button();
-            lblFooter = new System.Windows.Forms.Label();
 
             SuspendLayout();
 
             Text = "HahuEvents - Login";
-            ClientSize = new System.Drawing.Size(500, 580);
+            ClientSize = new System.Drawing.Size(500, 525);
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             MaximizeBox = false;
@@ -51,10 +49,10 @@ namespace HahuEvents.Desktop.Forms
             Font = new System.Drawing.Font("Segoe UI", 10F);
 
             pnlLogin.Location = new System.Drawing.Point(45, 25);
-            pnlLogin.Size = new System.Drawing.Size(410, 500);
+            pnlLogin.Size = new System.Drawing.Size(410, 475);
             pnlLogin.BackColor = System.Drawing.Color.White;
 
-            lblAppName.Text = "▦  HahuEvents";
+            lblAppName.Text = "HahuEvents";
             lblAppName.Font = new System.Drawing.Font("Segoe UI", 18F);
             lblAppName.ForeColor = System.Drawing.Color.FromArgb(36, 87, 197);
             lblAppName.Location = new System.Drawing.Point(35, 25);
@@ -107,17 +105,11 @@ namespace HahuEvents.Desktop.Forms
             btnOpenRegister.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             btnOpenRegister.Click += btnOpenRegister_Click;
 
-            lblFooter.Text = "HahuEvents | Event Registration Management";
-            lblFooter.ForeColor = System.Drawing.Color.Gray;
-            lblFooter.Location = new System.Drawing.Point(25, 465);
-            lblFooter.Size = new System.Drawing.Size(360, 25);
-            lblFooter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-
             pnlLogin.Controls.AddRange(new System.Windows.Forms.Control[]
             {
                 lblAppName, lblTitle, lblSubtitle, lblUsername,
                 txtUsername, lblPassword, txtPassword, chkShowPassword,
-                btnLogin, btnOpenRegister, lblFooter
+                btnLogin, btnOpenRegister
             });
 
             Controls.Add(pnlLogin);

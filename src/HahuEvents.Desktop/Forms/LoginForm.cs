@@ -24,17 +24,6 @@ namespace HahuEvents.Desktop.Forms
             string username = txtUsername.Text.Trim();
             string password = txtPassword.Text;
 
-            if (string.IsNullOrWhiteSpace(username) ||
-                string.IsNullOrWhiteSpace(password))
-            {
-                MessageBox.Show(
-                    "Enter your username and password.",
-                    "Validation",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
-                return;
-            }
-
             if (!AuthService.Login(
                 username, password, out string message))
             {

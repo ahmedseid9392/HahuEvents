@@ -20,7 +20,7 @@ namespace HahuEvents.Desktop.Services
                 Id = 6,
                 FullName = "System Administrator",
                 Username = "admin",
-                PasswordHash = HashPassword("Admin123!"),
+                PasswordHash = HashPassword("123"),
                 Role = UserRole.Administrator
             },
             new User
@@ -28,7 +28,7 @@ namespace HahuEvents.Desktop.Services
                 Id = 1,
                 FullName = "Nile Business Hub",
                 Username = "organizer",
-                PasswordHash = HashPassword("Organizer123!"),
+                PasswordHash = HashPassword("123"),
                 Role = UserRole.Organizer
             }
         };
@@ -48,17 +48,9 @@ namespace HahuEvents.Desktop.Services
             fullName = fullName.Trim();
             username = username.Trim();
 
-            if (string.IsNullOrWhiteSpace(fullName) ||
-                string.IsNullOrWhiteSpace(username) ||
-                string.IsNullOrWhiteSpace(password))
+            if (string.IsNullOrWhiteSpace(fullName))
             {
-                message = "All fields are required.";
-                return false;
-            }
-
-            if (password.Length < 8)
-            {
-                message = "Password must contain at least 8 characters.";
+                message = "Full name is required.";
                 return false;
             }
 

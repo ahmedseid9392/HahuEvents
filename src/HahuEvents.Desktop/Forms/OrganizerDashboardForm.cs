@@ -12,7 +12,6 @@ namespace HahuEvents.Desktop.Forms
     public partial class OrganizerDashboardForm : Form
     {
         private readonly InMemoryEventService _eventService = InMemoryEventService.Instance;
-        private Panel? _mockSectionPanel;
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int CurrentOrganizerId { get; set; }
@@ -50,6 +49,7 @@ namespace HahuEvents.Desktop.Forms
 
         private void OrganizerDashboardForm_Load(object? sender, EventArgs e)
         {
+            PopulateEventSelectors();
             LoadOrganizerEvents();
         }
 
@@ -108,8 +108,20 @@ namespace HahuEvents.Desktop.Forms
             pnlSidebar.BackColor = Color.White;
             pnlHeader.BackColor = canvasColor;
             pnlSummary.BackColor = canvasColor;
-            pnlQuickActions.BackColor = canvasColor;
             pnlMyEvents.BackColor = Color.White;
+
+            AddSummaryCard(
+                pnlSummary, 15, "My Events",
+                lblMyEventsCount, "Events you created");
+            AddSummaryCard(
+                pnlSummary, 254, "Published Events",
+                lblPublishedEventsCount, "Your live events");
+            AddSummaryCard(
+                pnlSummary, 493, "Total Registrations",
+                lblTotalRegistrations, "Across your events");
+            AddSummaryCard(
+                pnlSummary, 732, "Upcoming Events",
+                lblUpcomingEventsCount, "Events scheduled");
 
             lblDashboardTitle.Font = new Font(
                 "Segoe UI", 18F, FontStyle.Bold);
@@ -117,20 +129,29 @@ namespace HahuEvents.Desktop.Forms
             lblDashboardTitle.Size = new Size(600, 36);
             lblSubtitle.Location = new Point(22, 52);
 
-            btnLogout.Dock = DockStyle.Bottom;
-            btnLogout.Height = 48;
-            btnLogout.Padding = new Padding(12, 0, 0, 0);
             btnLogout.Visible = true;
             btnLogout.ForeColor = Color.FromArgb(170, 55, 55);
 
             dgvMyEvents.Anchor = AnchorStyles.Top | AnchorStyles.Bottom |
                 AnchorStyles.Left | AnchorStyles.Right;
-            dgvMyEvents.Width = pnlMyEvents.ClientSize.Width;
-            dgvMyEvents.Height = pnlMyEvents.ClientSize.Height - dgvMyEvents.Top;
+        }
+
+        private void PopulateEventSelectors()
+        {
+            List<Event> publishedEvents = _eventService.Events
+                .Where(eventItem =>
+                    eventItem.OrganizerId == CurrentOrganizerId &&
+                    eventItem.Status == EventStatus.Published)
+                .OrderBy(eventItem => eventItem.Date)
+                .ToList();
+
+            cmbRegistrationEvent.DataSource = publishedEvents.ToList();
+            cmbAttendanceEvent.DataSource = publishedEvents.ToList();
         }
 
         private void ConfigureEventContextMenu()
         {
+            components ??= new Container();
             var contextMenu = new ContextMenuStrip(components);
             var editItem = new ToolStripMenuItem("Edit event");
             var deleteItem = new ToolStripMenuItem("Delete event");
@@ -151,14 +172,10 @@ namespace HahuEvents.Desktop.Forms
         private void ShowDashboardView()
         {
             pnlSummary.Visible = true;
-            pnlQuickActions.Visible = true;
-            pnlMyEvents.Location = new Point(225, 325);
-            pnlMyEvents.Size = new Size(967, 335);
+            pnlMyEvents.Location = new Point(225, 252);
+            pnlMyEvents.Size = new Size(967, 408);
             pnlMyEvents.Visible = true;
-            if (_mockSectionPanel != null)
-            {
-                _mockSectionPanel.Visible = false;
-            }
+            HideOtherContentPanels();
             lblDashboardTitle.Text = "Organizer Dashboard";
             lblSubtitle.Text = "Manage Events and Participants";
             SetSelectedNavigationButton(btnDashboard);
@@ -167,127 +184,21 @@ namespace HahuEvents.Desktop.Forms
         private void ShowMyEventsView()
         {
             pnlSummary.Visible = false;
-            pnlQuickActions.Visible = false;
             pnlMyEvents.Location = new Point(225, 115);
             pnlMyEvents.Size = new Size(967, 545);
             pnlMyEvents.Visible = true;
-            if (_mockSectionPanel != null)
-            {
-                _mockSectionPanel.Visible = false;
-            }
+            HideOtherContentPanels();
             lblDashboardTitle.Text = "My Events";
             lblSubtitle.Text = "View, edit, and manage your events";
             SetSelectedNavigationButton(btnMyEvents);
             LoadOrganizerEvents();
         }
 
-        private void ShowMockSection(
-            string title,
-            string subtitle,
-            Button selectedButton,
-            string[] columns,
-            string[][] rows,
-            string? actionText = null)
+        private void HideOtherContentPanels()
         {
-            pnlSummary.Visible = false;
-            pnlQuickActions.Visible = false;
-            pnlMyEvents.Visible = false;
-
-            _mockSectionPanel ??= new Panel
-            {
-                Location = new Point(225, 115),
-                Size = new Size(967, 545),
-                BackColor = Color.White,
-                Anchor = AnchorStyles.Top | AnchorStyles.Bottom |
-                    AnchorStyles.Left | AnchorStyles.Right
-            };
-
-            if (_mockSectionPanel.Parent == null)
-            {
-                Controls.Add(_mockSectionPanel);
-            }
-
-            _mockSectionPanel.Controls.Clear();
-            _mockSectionPanel.Controls.Add(new Label
-            {
-                Text = title,
-                Location = new Point(24, 20),
-                Size = new Size(600, 32),
-                Font = new Font("Segoe UI", 16F, FontStyle.Bold),
-                ForeColor = Color.FromArgb(36, 54, 82)
-            });
-            _mockSectionPanel.Controls.Add(new Label
-            {
-                Text = subtitle,
-                Location = new Point(26, 56),
-                Size = new Size(700, 24),
-                Font = new Font("Segoe UI", 9F),
-                ForeColor = Color.FromArgb(91, 111, 145)
-            });
-
-            if (!string.IsNullOrWhiteSpace(actionText))
-            {
-                var actionButton = new Button
-                {
-                    Text = actionText,
-                    Location = new Point(760, 24),
-                    Size = new Size(180, 36),
-                    BackColor = Color.FromArgb(36, 87, 197),
-                    ForeColor = Color.White,
-                    FlatStyle = FlatStyle.Flat
-                };
-                actionButton.FlatAppearance.BorderSize = 0;
-                actionButton.Click += (_, _) => MessageBox.Show(
-                    "Participant registration is a mock preview and is not connected yet.",
-                    "Mock Preview",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
-                _mockSectionPanel.Controls.Add(actionButton);
-            }
-
-            var mockGrid = new DataGridView
-            {
-                Location = new Point(24, 100),
-                Size = new Size(916, 390),
-                Anchor = AnchorStyles.Top | AnchorStyles.Bottom |
-                    AnchorStyles.Left | AnchorStyles.Right,
-                BackgroundColor = Color.White,
-                BorderStyle = BorderStyle.FixedSingle,
-                AllowUserToAddRows = false,
-                AllowUserToDeleteRows = false,
-                ReadOnly = true,
-                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
-                SelectionMode = DataGridViewSelectionMode.FullRowSelect,
-                MultiSelect = false,
-                RowHeadersVisible = false
-            };
-
-            foreach (string column in columns)
-            {
-                mockGrid.Columns.Add(column, column);
-            }
-
-            foreach (string[] row in rows)
-            {
-                mockGrid.Rows.Add(row);
-            }
-
-            _mockSectionPanel.Controls.Add(mockGrid);
-            _mockSectionPanel.Controls.Add(new Label
-            {
-                Text = "Mock preview — sample data only; actions are not connected.",
-                Location = new Point(26, 502),
-                Size = new Size(700, 22),
-                Font = new Font("Segoe UI", 8F, FontStyle.Italic),
-                ForeColor = Color.FromArgb(102, 112, 133),
-                Anchor = AnchorStyles.Left | AnchorStyles.Bottom
-            });
-
-            lblDashboardTitle.Text = title;
-            lblSubtitle.Text = subtitle;
-            SetSelectedNavigationButton(selectedButton);
-            _mockSectionPanel.Visible = true;
-            _mockSectionPanel.BringToFront();
+            pnlRegistrations.Visible = false;
+            pnlAttendance.Visible = false;
+            pnlReports.Visible = false;
         }
 
         private void SetSelectedNavigationButton(Button selectedButton)
@@ -402,28 +313,115 @@ namespace HahuEvents.Desktop.Forms
 
         private void btnRegistrations_Click(object sender, EventArgs e)
         {
-            string eventTitle = GetMockEventTitle();
-            ShowMockSection(
-                "Participant Registrations",
-                "Review registrations and preview participant management.",
-                btnRegistrations,
-                new[] { "Event", "Participant", "Email", "Registered", "Status" },
-                new[]
-                {
-                    new[] { eventTitle, "Dawit Bekele", "dawit@example.com", "Oct 18, 2026", "Active" },
-                    new[] { eventTitle, "Marta Alemu", "marta@example.com", "Oct 20, 2026", "Active" },
-                    new[] { eventTitle, "Samuel Tesfaye", "samuel@example.com", "Oct 22, 2026", "Pending" }
-                },
-                "Register Participant");
+            ShowRegistrationSection();
         }
 
-        private string GetMockEventTitle()
+        private void ShowRegistrationSection()
         {
-            return _eventService.Events
-                .FirstOrDefault(eventItem =>
-                    eventItem.OrganizerId == CurrentOrganizerId)?.Title
-                ?? "Sample Event";
+            pnlSummary.Visible = false;
+            pnlMyEvents.Visible = false;
+            HideOtherContentPanels();
+            PopulateEventSelectors();
+            pnlRegistrations.Visible = true;
+
+            lblDashboardTitle.Text = "Participant Registrations";
+            lblSubtitle.Text = "View and register participants for your events";
+            SetSelectedNavigationButton(btnRegistrations);
+            RefreshRegistrationList();
         }
+
+        private void RegistrationEventSelector_SelectedIndexChanged(
+            object? sender,
+            EventArgs e)
+        {
+            RefreshRegistrationList();
+        }
+
+        private void RefreshRegistrationList()
+        {
+            Event? selectedEvent =
+                cmbRegistrationEvent.SelectedItem as Event;
+            dgvRegistrations.Rows.Clear();
+
+            if (selectedEvent == null)
+            {
+                lblRegistrationSummary.Text =
+                    "You have no published events available for registration.";
+                return;
+            }
+
+            lblRegistrationSummary.Text =
+                $"{_eventService.GetRegistrationCount(selectedEvent.Id)} / " +
+                $"{selectedEvent.Capacity} participants registered for " +
+                $"{selectedEvent.Title}.";
+
+            foreach (Registration registration in
+                _eventService.GetRegistrationsForEvent(
+                    selectedEvent.Id,
+                    CurrentOrganizerId))
+            {
+                Participant? participant =
+                    _eventService.GetParticipant(registration.ParticipantId);
+                if (participant == null)
+                {
+                    continue;
+                }
+
+                dgvRegistrations.Rows.Add(
+                    participant.FullName,
+                    participant.Email,
+                    participant.Phone,
+                    registration.RegistrationDate.ToString("g"));
+            }
+        }
+
+        private void RegisterParticipant_Click(object? sender, EventArgs e)
+        {
+            if (cmbRegistrationEvent.SelectedItem is not Event selectedEvent)
+            {
+                MessageBox.Show(
+                    this,
+                    "Select a published event first.",
+                    "Registration",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            using var registrationForm =
+                new ParticipantRegistrationForm(selectedEvent);
+            if (registrationForm.ShowDialog(this) != DialogResult.OK)
+            {
+                return;
+            }
+
+            if (!_eventService.RegisterParticipant(
+                selectedEvent.Id,
+                CurrentOrganizerId,
+                registrationForm.ParticipantName,
+                registrationForm.Email,
+                registrationForm.Phone,
+                out string message))
+            {
+                MessageBox.Show(
+                    this,
+                    message,
+                    "Registration Failed",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            RefreshRegistrationList();
+            LoadOrganizerEvents();
+            MessageBox.Show(
+                this,
+                message,
+                "Registration",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+        }
+
         private void dgvMyEvents_CellDoubleClick(
     object? sender,
     DataGridViewCellEventArgs e)
@@ -517,34 +515,162 @@ namespace HahuEvents.Desktop.Forms
 
         private void btnAttendance_Click(object sender, EventArgs e)
         {
-            string eventTitle = GetMockEventTitle();
-            ShowMockSection(
-                "Attendance",
-                "Preview attendee check-in for your events.",
-                btnAttendance,
-                new[] { "Event", "Participant", "Email", "Attendance", "Check-in time" },
-                new[]
-                {
-                    new[] { eventTitle, "Dawit Bekele", "dawit@example.com", "Present", "09:05 AM" },
-                    new[] { eventTitle, "Marta Alemu", "marta@example.com", "Not checked in", "—" },
-                    new[] { eventTitle, "Samuel Tesfaye", "samuel@example.com", "Present", "09:24 AM" }
-                });
+            ShowAttendanceSection();
         }
 
         private void btnMyReports_Click(object sender, EventArgs e)
         {
-            string eventTitle = GetMockEventTitle();
-            ShowMockSection(
-                "My Reports",
-                "Preview event registration and attendance summaries.",
-                btnMyReports,
-                new[] { "Event", "Registrations", "Attended", "Attendance rate", "Status" },
-                new[]
-                {
-                    new[] { eventTitle, "245", "186", "76%", "Published" },
-                    new[] { "Entrepreneurs Forum", "198", "142", "72%", "Published" },
-                    new[] { "Leadership Summit", "327", "251", "77%", "Published" }
-                });
+            ShowReportsSection();
+        }
+
+        private void ShowAttendanceSection()
+        {
+            pnlSummary.Visible = false;
+            pnlMyEvents.Visible = false;
+            HideOtherContentPanels();
+            PopulateEventSelectors();
+            pnlAttendance.Visible = true;
+
+            lblDashboardTitle.Text = "Attendance";
+            lblSubtitle.Text = "Track attendance for your event participants";
+            SetSelectedNavigationButton(btnAttendance);
+            RefreshAttendanceList();
+        }
+
+        private void AttendanceEventSelector_SelectedIndexChanged(
+            object? sender,
+            EventArgs e)
+        {
+            RefreshAttendanceList();
+        }
+
+        private void RefreshAttendanceList()
+        {
+            if (cmbAttendanceEvent.SelectedItem is not Event eventItem)
+            {
+                dgvAttendance.Rows.Clear();
+                lblAttendanceSummary.Text =
+                    "No published events are available for attendance tracking.";
+                return;
+            }
+
+            IReadOnlyList<Registration> registrations =
+                _eventService.GetRegistrationsForEvent(
+                    eventItem.Id,
+                    CurrentOrganizerId);
+            dgvAttendance.Rows.Clear();
+
+            foreach (Registration registration in registrations)
+            {
+                Participant? participant =
+                    _eventService.GetParticipant(registration.ParticipantId);
+                int rowIndex = dgvAttendance.Rows.Add(
+                    participant?.FullName ??
+                        $"Participant #{registration.ParticipantId}",
+                    participant?.Email ?? "—",
+                    registration.AttendanceStatus,
+                    registration.RegistrationDate.ToString("g"));
+                dgvAttendance.Rows[rowIndex].Tag = registration;
+            }
+
+            int presentCount = registrations.Count(item =>
+                item.AttendanceStatus == AttendanceStatus.Present);
+            int absentCount = registrations.Count(item =>
+                item.AttendanceStatus == AttendanceStatus.Absent);
+            int unmarkedCount = registrations.Count(item =>
+                item.AttendanceStatus == AttendanceStatus.NotMarked);
+            lblAttendanceSummary.Text =
+                $"{eventItem.Title}: {presentCount} present, {absentCount} absent, " +
+                $"{unmarkedCount} not marked.";
+        }
+
+        private void SetSelectedAttendance_Click(object? sender, EventArgs e)
+        {
+            if (sender is not Button { Tag: AttendanceStatus attendanceStatus } ||
+                cmbAttendanceEvent.SelectedItem is not Event eventItem ||
+                dgvAttendance.CurrentRow?.Tag is not Registration registration)
+            {
+                MessageBox.Show(
+                    this,
+                    "Select a registered participant first.",
+                    "Attendance",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!_eventService.SetAttendanceStatus(
+                eventItem.Id,
+                CurrentOrganizerId,
+                registration.Id,
+                attendanceStatus))
+            {
+                MessageBox.Show(
+                    this,
+                    "The participant's attendance could not be updated.",
+                    "Attendance",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            RefreshAttendanceList();
+        }
+
+        private void ShowReportsSection()
+        {
+            pnlSummary.Visible = false;
+            pnlMyEvents.Visible = false;
+            HideOtherContentPanels();
+            pnlReports.Visible = true;
+
+            Event[] organizerEvents = _eventService.Events
+                .Where(item => item.OrganizerId == CurrentOrganizerId)
+                .OrderBy(item => item.Date)
+                .ToArray();
+            int totalRegistrations = 0;
+            int totalPresent = 0;
+            int totalAbsent = 0;
+
+            dgvReports.Rows.Clear();
+
+            foreach (Event eventItem in organizerEvents)
+            {
+                IReadOnlyList<Registration> registrations =
+                    _eventService.GetRegistrationsForEvent(
+                        eventItem.Id,
+                        CurrentOrganizerId);
+                int presentCount = registrations.Count(item =>
+                    item.AttendanceStatus == AttendanceStatus.Present);
+                int absentCount = registrations.Count(item =>
+                    item.AttendanceStatus == AttendanceStatus.Absent);
+                int unmarkedCount = registrations.Count(item =>
+                    item.AttendanceStatus == AttendanceStatus.NotMarked);
+                double attendanceRate = registrations.Count == 0
+                    ? 0
+                    : presentCount * 100.0 / registrations.Count;
+
+                totalRegistrations += registrations.Count;
+                totalPresent += presentCount;
+                totalAbsent += absentCount;
+                dgvReports.Rows.Add(
+                    eventItem.Title,
+                    registrations.Count,
+                    presentCount,
+                    absentCount,
+                    unmarkedCount,
+                    $"{attendanceRate:F1}%",
+                    eventItem.Status);
+            }
+
+            lblReportSummary.Text =
+                $"Events: {organizerEvents.Length}    " +
+                $"Registrations: {totalRegistrations}    " +
+                $"Present: {totalPresent}    Absent: {totalAbsent}";
+
+            lblDashboardTitle.Text = "My Reports";
+            lblSubtitle.Text = "Event registration and attendance summary";
+            SetSelectedNavigationButton(btnMyReports);
         }
 
         private void btnLogout_Click(object sender, EventArgs e)

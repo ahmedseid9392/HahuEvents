@@ -23,36 +23,9 @@ namespace HahuEvents.Desktop.Forms
 
         private void btnRegister_Click(object sender, EventArgs e)
         {
-            string fullName = txtFullName.Text.Trim();
-            string username = txtUsername.Text.Trim();
+            string fullName = txtFullName.Text;
+            string username = txtUsername.Text;
             string password = txtPassword.Text;
-            string confirmPassword = txtConfirmPassword.Text;
-
-            if (string.IsNullOrWhiteSpace(fullName) ||
-                string.IsNullOrWhiteSpace(username) ||
-                string.IsNullOrWhiteSpace(password) ||
-                string.IsNullOrWhiteSpace(confirmPassword))
-            {
-                MessageBox.Show(
-                    "Please complete all fields.",
-                    "Validation",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (password != confirmPassword)
-            {
-                MessageBox.Show(
-                    "Passwords do not match.",
-                    "Validation",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
-
-                txtConfirmPassword.Clear();
-                txtConfirmPassword.Focus();
-                return;
-            }
 
             if (!AuthService.RegisterOrganizer(
                 fullName, username, password, out string message))

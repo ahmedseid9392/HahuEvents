@@ -19,7 +19,6 @@ namespace HahuEvents.Desktop.Forms
         private System.Windows.Forms.CheckBox chkShowPassword;
         private System.Windows.Forms.Button btnRegister;
         private System.Windows.Forms.Button btnBackToLogin;
-        private System.Windows.Forms.Label lblFooter;
 
         protected override void Dispose(bool disposing)
         {
@@ -46,12 +45,11 @@ namespace HahuEvents.Desktop.Forms
             chkShowPassword = new System.Windows.Forms.CheckBox();
             btnRegister = new System.Windows.Forms.Button();
             btnBackToLogin = new System.Windows.Forms.Button();
-            lblFooter = new System.Windows.Forms.Label();
 
             SuspendLayout();
 
             Text = "HahuEvents - Organizer Registration";
-            ClientSize = new System.Drawing.Size(500, 690);
+            ClientSize = new System.Drawing.Size(500, 635);
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             MaximizeBox = false;
@@ -59,10 +57,10 @@ namespace HahuEvents.Desktop.Forms
             Font = new System.Drawing.Font("Segoe UI", 10F);
 
             pnlRegister.Location = new System.Drawing.Point(45, 20);
-            pnlRegister.Size = new System.Drawing.Size(410, 635);
+            pnlRegister.Size = new System.Drawing.Size(410, 595);
             pnlRegister.BackColor = System.Drawing.Color.White;
 
-            lblAppName.Text = "▦  HahuEvents";
+            lblAppName.Text = " HahuEvents";
             lblAppName.Font = new System.Drawing.Font("Segoe UI", 18F);
             lblAppName.ForeColor = System.Drawing.Color.FromArgb(36, 87, 197);
             lblAppName.Location = new System.Drawing.Point(35, 20);
@@ -93,7 +91,7 @@ namespace HahuEvents.Desktop.Forms
             txtUsername.Location = new System.Drawing.Point(35, 264);
             txtUsername.Size = new System.Drawing.Size(340, 32);
 
-            lblPassword.Text = "Password (minimum 8 characters)";
+            lblPassword.Text = "Password";
             lblPassword.Location = new System.Drawing.Point(35, 309);
             lblPassword.Size = new System.Drawing.Size(340, 25);
 
@@ -133,13 +131,6 @@ namespace HahuEvents.Desktop.Forms
                 System.Windows.Forms.FlatStyle.Flat;
             btnBackToLogin.Click += btnBackToLogin_Click;
 
-            lblFooter.Text = "HahuEvents | Organizer Registration";
-            lblFooter.ForeColor = System.Drawing.Color.Gray;
-            lblFooter.Location = new System.Drawing.Point(25, 590);
-            lblFooter.Size = new System.Drawing.Size(360, 25);
-            lblFooter.TextAlign =
-                System.Drawing.ContentAlignment.MiddleCenter;
-
             pnlRegister.Controls.AddRange(
                 new System.Windows.Forms.Control[]
                 {
@@ -149,7 +140,7 @@ namespace HahuEvents.Desktop.Forms
                     lblPassword, txtPassword,
                     lblConfirmPassword, txtConfirmPassword,
                     chkShowPassword, btnRegister,
-                    btnBackToLogin, lblFooter
+                    btnBackToLogin
                 });
 
             Controls.Add(pnlRegister);
