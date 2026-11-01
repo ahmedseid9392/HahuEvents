@@ -103,8 +103,9 @@ namespace HahuEvents.Desktop.Forms
             pnlSidebar.Controls.Add(label1);
             pnlSidebar.Dock = DockStyle.Left;
             pnlSidebar.Location = new Point(0, 0);
+            pnlSidebar.Margin = new Padding(3, 2, 3, 2);
             pnlSidebar.Name = "pnlSidebar";
-            pnlSidebar.Size = new Size(220, 703);
+            pnlSidebar.Size = new Size(192, 527);
             pnlSidebar.TabIndex = 0;
             // 
             // button6
@@ -112,19 +113,19 @@ namespace HahuEvents.Desktop.Forms
             button6.BackColor = Color.DodgerBlue;
             button6.Cursor = Cursors.Hand;
             button6.Image = (Image)resources.GetObject("button6.Image");
-            button6.Location = new Point(12, 24);
-            button6.Margin = new Padding(3, 4, 3, 4);
+            button6.Location = new Point(10, 18);
             button6.Name = "button6";
-            button6.Size = new Size(47, 50);
+            button6.Size = new Size(41, 38);
             button6.TabIndex = 10;
             button6.UseVisualStyleBackColor = false;
             button6.Click += button6_Click;
             // 
             // pictureBox1
             // 
-            pictureBox1.Location = new Point(12, 31);
+            pictureBox1.Location = new Point(10, 23);
+            pictureBox1.Margin = new Padding(3, 2, 3, 2);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(23, 24);
+            pictureBox1.Size = new Size(20, 18);
             pictureBox1.TabIndex = 6;
             pictureBox1.TabStop = false;
             // 
@@ -132,9 +133,10 @@ namespace HahuEvents.Desktop.Forms
             // 
             button5.FlatStyle = FlatStyle.Flat;
             button5.ForeColor = Color.FromArgb(102, 112, 133);
-            button5.Location = new Point(12, 291);
+            button5.Location = new Point(10, 218);
+            button5.Margin = new Padding(3, 2, 3, 2);
             button5.Name = "button5";
-            button5.Size = new Size(196, 36);
+            button5.Size = new Size(172, 27);
             button5.TabIndex = 5;
             button5.Text = "System Settings";
             button5.TextAlign = ContentAlignment.MiddleLeft;
@@ -144,9 +146,10 @@ namespace HahuEvents.Desktop.Forms
             // 
             button4.FlatStyle = FlatStyle.Flat;
             button4.ForeColor = Color.FromArgb(102, 112, 133);
-            button4.Location = new Point(12, 240);
+            button4.Location = new Point(10, 180);
+            button4.Margin = new Padding(3, 2, 3, 2);
             button4.Name = "button4";
-            button4.Size = new Size(196, 36);
+            button4.Size = new Size(172, 27);
             button4.TabIndex = 4;
             button4.Text = "System Reports";
             button4.TextAlign = ContentAlignment.MiddleLeft;
@@ -156,9 +159,10 @@ namespace HahuEvents.Desktop.Forms
             // 
             button3.FlatStyle = FlatStyle.Flat;
             button3.ForeColor = Color.FromArgb(102, 112, 133);
-            button3.Location = new Point(12, 189);
+            button3.Location = new Point(10, 142);
+            button3.Margin = new Padding(3, 2, 3, 2);
             button3.Name = "button3";
-            button3.Size = new Size(196, 36);
+            button3.Size = new Size(172, 27);
             button3.TabIndex = 3;
             button3.Text = "Manage Organizers";
             button3.TextAlign = ContentAlignment.MiddleLeft;
@@ -171,9 +175,10 @@ namespace HahuEvents.Desktop.Forms
             button2.FlatAppearance.BorderSize = 0;
             button2.FlatStyle = FlatStyle.Flat;
             button2.ForeColor = Color.FromArgb(102, 112, 133);
-            button2.Location = new Point(12, 138);
+            button2.Location = new Point(10, 104);
+            button2.Margin = new Padding(3, 2, 3, 2);
             button2.Name = "button2";
-            button2.Size = new Size(196, 36);
+            button2.Size = new Size(172, 27);
             button2.TabIndex = 2;
             button2.Text = "All Events";
             button2.TextAlign = ContentAlignment.MiddleLeft;
@@ -182,14 +187,15 @@ namespace HahuEvents.Desktop.Forms
             // 
             // button1
             // 
-            button1.BackColor = Color.FromArgb(36, 87, 197);
+            button1.BackColor = Color.RoyalBlue;
             button1.Cursor = Cursors.Hand;
             button1.FlatAppearance.BorderSize = 0;
             button1.FlatStyle = FlatStyle.Flat;
             button1.ForeColor = SystemColors.Control;
-            button1.Location = new Point(12, 89);
+            button1.Location = new Point(10, 67);
+            button1.Margin = new Padding(3, 2, 3, 2);
             button1.Name = "button1";
-            button1.Size = new Size(196, 36);
+            button1.Size = new Size(172, 27);
             button1.TabIndex = 1;
             button1.Text = "Dashboard";
             button1.TextAlign = ContentAlignment.MiddleLeft;
@@ -201,9 +207,9 @@ namespace HahuEvents.Desktop.Forms
             label1.AutoSize = true;
             label1.Cursor = Cursors.Hand;
             label1.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            label1.Location = new Point(61, 36);
+            label1.Location = new Point(53, 27);
             label1.Name = "label1";
-            label1.Size = new Size(103, 23);
+            label1.Size = new Size(86, 19);
             label1.TabIndex = 0;
             label1.Text = "HahuEvents";
             label1.Click += label1_Click;
@@ -215,9 +221,10 @@ namespace HahuEvents.Desktop.Forms
             pnlHeader.Controls.Add(label3);
             pnlHeader.Controls.Add(label2);
             pnlHeader.Dock = DockStyle.Top;
-            pnlHeader.Location = new Point(220, 0);
+            pnlHeader.Location = new Point(192, 0);
+            pnlHeader.Margin = new Padding(3, 2, 3, 2);
             pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(962, 80);
+            pnlHeader.Size = new Size(842, 60);
             pnlHeader.TabIndex = 1;
             // 
             // label4
@@ -225,9 +232,9 @@ namespace HahuEvents.Desktop.Forms
             label4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label4.AutoSize = true;
             label4.ForeColor = Color.FromArgb(23, 32, 51);
-            label4.Location = new Point(770, 9);
+            label4.Location = new Point(674, 7);
             label4.Name = "label4";
-            label4.Size = new Size(175, 20);
+            label4.Size = new Size(133, 15);
             label4.TabIndex = 2;
             label4.Text = "Welcome Administrator";
             // 
@@ -235,9 +242,9 @@ namespace HahuEvents.Desktop.Forms
             // 
             label3.AutoSize = true;
             label3.ForeColor = Color.FromArgb(102, 112, 133);
-            label3.Location = new Point(16, 42);
+            label3.Location = new Point(14, 32);
             label3.Name = "label3";
-            label3.Size = new Size(309, 20);
+            label3.Size = new Size(248, 15);
             label3.TabIndex = 1;
             label3.Text = "Monitor events,organizers and system activity";
             // 
@@ -246,9 +253,9 @@ namespace HahuEvents.Desktop.Forms
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             label2.ForeColor = Color.FromArgb(23, 32, 51);
-            label2.Location = new Point(16, 11);
+            label2.Location = new Point(14, 8);
             label2.Name = "label2";
-            label2.Size = new Size(250, 28);
+            label2.Size = new Size(203, 21);
             label2.TabIndex = 0;
             label2.Text = "Administrator Dashboard";
             label2.Click += label2_Click;
@@ -258,9 +265,10 @@ namespace HahuEvents.Desktop.Forms
             pnlContent.BackColor = Color.FromArgb(245, 247, 251);
             pnlContent.Controls.Add(pnlALLEvents);
             pnlContent.Dock = DockStyle.Fill;
-            pnlContent.Location = new Point(220, 80);
+            pnlContent.Location = new Point(192, 60);
+            pnlContent.Margin = new Padding(3, 2, 3, 2);
             pnlContent.Name = "pnlContent";
-            pnlContent.Size = new Size(962, 623);
+            pnlContent.Size = new Size(842, 467);
             pnlContent.TabIndex = 2;
             // 
             // pnlALLEvents
@@ -272,8 +280,9 @@ namespace HahuEvents.Desktop.Forms
             pnlALLEvents.Controls.Add(pnlSummaryCards);
             pnlALLEvents.Dock = DockStyle.Fill;
             pnlALLEvents.Location = new Point(0, 0);
+            pnlALLEvents.Margin = new Padding(3, 2, 3, 2);
             pnlALLEvents.Name = "pnlALLEvents";
-            pnlALLEvents.Size = new Size(962, 623);
+            pnlALLEvents.Size = new Size(842, 467);
             pnlALLEvents.TabIndex = 0;
             // 
             // dgvAllEvents
@@ -289,7 +298,8 @@ namespace HahuEvents.Desktop.Forms
             dgvAllEvents.Columns.AddRange(new DataGridViewColumn[] { colEventId, colEventTitle, colOrganizer, colEventDate, colLocation, colCapacity, colRegistrations, colStatus, colViewDetails });
             dgvAllEvents.Dock = DockStyle.Fill;
             dgvAllEvents.GridColor = Color.FromArgb(217, 223, 234);
-            dgvAllEvents.Location = new Point(0, 178);
+            dgvAllEvents.Location = new Point(0, 134);
+            dgvAllEvents.Margin = new Padding(3, 2, 3, 2);
             dgvAllEvents.MultiSelect = false;
             dgvAllEvents.Name = "dgvAllEvents";
             dgvAllEvents.ReadOnly = true;
@@ -297,7 +307,7 @@ namespace HahuEvents.Desktop.Forms
             dgvAllEvents.RowHeadersWidth = 51;
             dgvAllEvents.RowTemplate.Height = 30;
             dgvAllEvents.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvAllEvents.Size = new Size(962, 409);
+            dgvAllEvents.Size = new Size(842, 306);
             dgvAllEvents.TabIndex = 2;
             // 
             // colEventId
@@ -369,9 +379,9 @@ namespace HahuEvents.Desktop.Forms
             // 
             lblFooter.Dock = DockStyle.Bottom;
             lblFooter.ForeColor = Color.FromArgb(102, 112, 133);
-            lblFooter.Location = new Point(0, 587);
+            lblFooter.Location = new Point(0, 440);
             lblFooter.Name = "lblFooter";
-            lblFooter.Size = new Size(962, 36);
+            lblFooter.Size = new Size(842, 27);
             lblFooter.TabIndex = 3;
             lblFooter.Text = "HahuEvents | Event Registration Management System";
             lblFooter.TextAlign = ContentAlignment.MiddleCenter;
@@ -386,10 +396,11 @@ namespace HahuEvents.Desktop.Forms
             pnlEventFilters.Controls.Add(cmbOrganizerFilter);
             pnlEventFilters.Controls.Add(txtSearchEvent);
             pnlEventFilters.Dock = DockStyle.Top;
-            pnlEventFilters.Location = new Point(0, 120);
+            pnlEventFilters.Location = new Point(0, 90);
+            pnlEventFilters.Margin = new Padding(3, 2, 3, 2);
             pnlEventFilters.Name = "pnlEventFilters";
-            pnlEventFilters.Padding = new Padding(16, 10, 16, 10);
-            pnlEventFilters.Size = new Size(962, 58);
+            pnlEventFilters.Padding = new Padding(14, 8, 14, 8);
+            pnlEventFilters.Size = new Size(842, 44);
             pnlEventFilters.TabIndex = 1;
             // 
             // btnReset
@@ -398,9 +409,10 @@ namespace HahuEvents.Desktop.Forms
             btnReset.FlatAppearance.BorderColor = Color.FromArgb(217, 223, 234);
             btnReset.FlatStyle = FlatStyle.Flat;
             btnReset.ForeColor = Color.FromArgb(23, 32, 51);
-            btnReset.Location = new Point(870, 12);
+            btnReset.Location = new Point(761, 9);
+            btnReset.Margin = new Padding(3, 2, 3, 2);
             btnReset.Name = "btnReset";
-            btnReset.Size = new Size(76, 30);
+            btnReset.Size = new Size(66, 22);
             btnReset.TabIndex = 6;
             btnReset.Text = "Reset";
             btnReset.UseVisualStyleBackColor = false;
@@ -412,9 +424,10 @@ namespace HahuEvents.Desktop.Forms
             btnSearch.FlatAppearance.BorderSize = 0;
             btnSearch.FlatStyle = FlatStyle.Flat;
             btnSearch.ForeColor = Color.White;
-            btnSearch.Location = new Point(786, 12);
+            btnSearch.Location = new Point(688, 9);
+            btnSearch.Margin = new Padding(3, 2, 3, 2);
             btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(76, 30);
+            btnSearch.Size = new Size(66, 22);
             btnSearch.TabIndex = 5;
             btnSearch.Text = "Search";
             btnSearch.UseVisualStyleBackColor = false;
@@ -423,17 +436,19 @@ namespace HahuEvents.Desktop.Forms
             // dtpEndDate
             // 
             dtpEndDate.Format = DateTimePickerFormat.Short;
-            dtpEndDate.Location = new Point(649, 13);
+            dtpEndDate.Location = new Point(568, 10);
+            dtpEndDate.Margin = new Padding(3, 2, 3, 2);
             dtpEndDate.Name = "dtpEndDate";
-            dtpEndDate.Size = new Size(125, 27);
+            dtpEndDate.Size = new Size(110, 23);
             dtpEndDate.TabIndex = 4;
             // 
             // dtpStartDate
             // 
             dtpStartDate.Format = DateTimePickerFormat.Short;
-            dtpStartDate.Location = new Point(512, 13);
+            dtpStartDate.Location = new Point(448, 10);
+            dtpStartDate.Margin = new Padding(3, 2, 3, 2);
             dtpStartDate.Name = "dtpStartDate";
-            dtpStartDate.Size = new Size(125, 27);
+            dtpStartDate.Size = new Size(110, 23);
             dtpStartDate.TabIndex = 3;
             // 
             // cmbStatusFilter
@@ -441,26 +456,29 @@ namespace HahuEvents.Desktop.Forms
             cmbStatusFilter.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbStatusFilter.FormattingEnabled = true;
             cmbStatusFilter.Items.AddRange(new object[] { "All", "Draft", "Published", "Cancelled" });
-            cmbStatusFilter.Location = new Point(370, 13);
+            cmbStatusFilter.Location = new Point(324, 10);
+            cmbStatusFilter.Margin = new Padding(3, 2, 3, 2);
             cmbStatusFilter.Name = "cmbStatusFilter";
-            cmbStatusFilter.Size = new Size(130, 28);
+            cmbStatusFilter.Size = new Size(114, 23);
             cmbStatusFilter.TabIndex = 2;
             // 
             // cmbOrganizerFilter
             // 
             cmbOrganizerFilter.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbOrganizerFilter.FormattingEnabled = true;
-            cmbOrganizerFilter.Location = new Point(208, 13);
+            cmbOrganizerFilter.Location = new Point(182, 10);
+            cmbOrganizerFilter.Margin = new Padding(3, 2, 3, 2);
             cmbOrganizerFilter.Name = "cmbOrganizerFilter";
-            cmbOrganizerFilter.Size = new Size(150, 28);
+            cmbOrganizerFilter.Size = new Size(132, 23);
             cmbOrganizerFilter.TabIndex = 1;
             // 
             // txtSearchEvent
             // 
-            txtSearchEvent.Location = new Point(16, 14);
+            txtSearchEvent.Location = new Point(14, 10);
+            txtSearchEvent.Margin = new Padding(3, 2, 3, 2);
             txtSearchEvent.Name = "txtSearchEvent";
             txtSearchEvent.PlaceholderText = "Search title or location";
-            txtSearchEvent.Size = new Size(180, 27);
+            txtSearchEvent.Size = new Size(158, 23);
             txtSearchEvent.TabIndex = 0;
             // 
             // pnlSummaryCards
@@ -471,8 +489,9 @@ namespace HahuEvents.Desktop.Forms
             pnlSummaryCards.Controls.Add(panel1);
             pnlSummaryCards.Dock = DockStyle.Top;
             pnlSummaryCards.Location = new Point(0, 0);
+            pnlSummaryCards.Margin = new Padding(3, 2, 3, 2);
             pnlSummaryCards.Name = "pnlSummaryCards";
-            pnlSummaryCards.Size = new Size(962, 120);
+            pnlSummaryCards.Size = new Size(842, 90);
             pnlSummaryCards.TabIndex = 0;
             // 
             // panel3
@@ -480,27 +499,28 @@ namespace HahuEvents.Desktop.Forms
             panel3.BorderStyle = BorderStyle.FixedSingle;
             panel3.Controls.Add(label11);
             panel3.Controls.Add(label7);
-            panel3.Location = new Point(511, 20);
+            panel3.Location = new Point(447, 15);
+            panel3.Margin = new Padding(3, 2, 3, 2);
             panel3.Name = "panel3";
-            panel3.Size = new Size(159, 69);
+            panel3.Size = new Size(139, 52);
             panel3.TabIndex = 1;
             // 
             // label11
             // 
             label11.AutoSize = true;
             label11.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label11.Location = new Point(45, 36);
+            label11.Location = new Point(39, 27);
             label11.Name = "label11";
-            label11.Size = new Size(24, 28);
+            label11.Size = new Size(19, 21);
             label11.TabIndex = 3;
             label11.Text = "5";
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(18, 6);
+            label7.Location = new Point(16, 4);
             label7.Name = "label7";
-            label7.Size = new Size(119, 20);
+            label7.Size = new Size(96, 15);
             label7.TabIndex = 1;
             label7.Text = "Published Events";
             // 
@@ -509,27 +529,28 @@ namespace HahuEvents.Desktop.Forms
             panel4.BorderStyle = BorderStyle.FixedSingle;
             panel4.Controls.Add(label12);
             panel4.Controls.Add(label8);
-            panel4.Location = new Point(744, 20);
+            panel4.Location = new Point(651, 15);
+            panel4.Margin = new Padding(3, 2, 3, 2);
             panel4.Name = "panel4";
-            panel4.Size = new Size(159, 69);
+            panel4.Size = new Size(139, 52);
             panel4.TabIndex = 1;
             // 
             // label12
             // 
             label12.AutoSize = true;
             label12.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label12.Location = new Point(41, 36);
+            label12.Location = new Point(36, 27);
             label12.Name = "label12";
-            label12.Size = new Size(24, 28);
+            label12.Size = new Size(19, 21);
             label12.TabIndex = 3;
             label12.Text = "1";
             // 
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(16, 6);
+            label8.Location = new Point(14, 4);
             label8.Name = "label8";
-            label8.Size = new Size(114, 20);
+            label8.Size = new Size(91, 15);
             label8.TabIndex = 2;
             label8.Text = "Cancelled Event";
             // 
@@ -539,9 +560,10 @@ namespace HahuEvents.Desktop.Forms
             panel2.Controls.Add(label10);
             panel2.Controls.Add(label6);
             panel2.Cursor = Cursors.Hand;
-            panel2.Location = new Point(276, 20);
+            panel2.Location = new Point(242, 15);
+            panel2.Margin = new Padding(3, 2, 3, 2);
             panel2.Name = "panel2";
-            panel2.Size = new Size(159, 69);
+            panel2.Size = new Size(139, 52);
             panel2.TabIndex = 1;
             panel2.Click += panel2_Click;
             // 
@@ -550,9 +572,9 @@ namespace HahuEvents.Desktop.Forms
             label10.AutoSize = true;
             label10.Cursor = Cursors.Hand;
             label10.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label10.Location = new Point(43, 39);
+            label10.Location = new Point(38, 29);
             label10.Name = "label10";
-            label10.Size = new Size(24, 28);
+            label10.Size = new Size(19, 21);
             label10.TabIndex = 3;
             label10.Text = "8";
             label10.Click += label10_Click;
@@ -561,9 +583,9 @@ namespace HahuEvents.Desktop.Forms
             // 
             label6.AutoSize = true;
             label6.Cursor = Cursors.Hand;
-            label6.Location = new Point(20, 6);
+            label6.Location = new Point(18, 4);
             label6.Name = "label6";
-            label6.Size = new Size(82, 20);
+            label6.Size = new Size(64, 15);
             label6.TabIndex = 0;
             label6.Text = "Total event";
             label6.Click += label6_Click;
@@ -573,39 +595,41 @@ namespace HahuEvents.Desktop.Forms
             panel1.BorderStyle = BorderStyle.FixedSingle;
             panel1.Controls.Add(label9);
             panel1.Controls.Add(label5);
-            panel1.Location = new Point(47, 20);
+            panel1.Location = new Point(41, 15);
+            panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(159, 69);
+            panel1.Size = new Size(139, 52);
             panel1.TabIndex = 0;
             // 
             // label9
             // 
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label9.Location = new Point(35, 36);
+            label9.Location = new Point(31, 27);
             label9.Name = "label9";
-            label9.Size = new Size(24, 28);
+            label9.Size = new Size(19, 21);
             label9.TabIndex = 2;
             label9.Text = "5";
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(13, 6);
+            label5.Location = new Point(11, 4);
             label5.Name = "label5";
-            label5.Size = new Size(111, 20);
+            label5.Size = new Size(86, 15);
             label5.TabIndex = 0;
             label5.Text = "Total Organizer";
             // 
             // AdminDashboardForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(245, 247, 251);
-            ClientSize = new Size(1182, 703);
+            ClientSize = new Size(1034, 527);
             Controls.Add(pnlContent);
             Controls.Add(pnlHeader);
             Controls.Add(pnlSidebar);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "AdminDashboardForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "HahuEvents - Administrator Dashboard";

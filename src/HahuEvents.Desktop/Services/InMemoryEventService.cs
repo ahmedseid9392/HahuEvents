@@ -86,7 +86,10 @@ namespace HahuEvents.Desktop.Services
 
         public string GetOrganizerName(int organizerId)
         {
-            return _organizers.FirstOrDefault(organizer => organizer.Id == organizerId)?.FullName ?? "Unknown Organizer";
+            return AuthService.GetOrganizer(organizerId)?.FullName
+                ?? _organizers.FirstOrDefault(
+                    organizer => organizer.Id == organizerId)?.FullName
+                ?? "Unknown Organizer";
         }
 
         public int GetRegistrationCount(int eventId)

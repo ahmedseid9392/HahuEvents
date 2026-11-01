@@ -38,48 +38,31 @@ namespace HahuEvents.Desktop.Forms
 
         private void InitializeComponent()
         {
-            pnlForm = new System.Windows.Forms.Panel();
-            lblFormTitle = new System.Windows.Forms.Label();
-            lblSubtitle = new System.Windows.Forms.Label();
-            lblTitle = new System.Windows.Forms.Label();
-            lblDescription = new System.Windows.Forms.Label();
-            lblDate = new System.Windows.Forms.Label();
-            lblLocation = new System.Windows.Forms.Label();
-            lblCapacity = new System.Windows.Forms.Label();
-            lblStatus = new System.Windows.Forms.Label();
-
-            txtEventTitle = new System.Windows.Forms.TextBox();
-            txtDescription = new System.Windows.Forms.TextBox();
-            txtLocation = new System.Windows.Forms.TextBox();
-            dtpEventDate = new System.Windows.Forms.DateTimePicker();
-            nudCapacity = new System.Windows.Forms.NumericUpDown();
-            cmbEventStatus = new System.Windows.Forms.ComboBox();
-
-            btnSaveEvent = new System.Windows.Forms.Button();
-            btnClear = new System.Windows.Forms.Button();
-            btnCancel = new System.Windows.Forms.Button();
-
+            pnlForm = new Panel();
+            lblFormTitle = new Label();
+            lblSubtitle = new Label();
+            lblTitle = new Label();
+            txtEventTitle = new TextBox();
+            lblDescription = new Label();
+            txtDescription = new TextBox();
+            lblDate = new Label();
+            dtpEventDate = new DateTimePicker();
+            lblLocation = new Label();
+            txtLocation = new TextBox();
+            lblCapacity = new Label();
+            nudCapacity = new NumericUpDown();
+            lblStatus = new Label();
+            cmbEventStatus = new ComboBox();
+            btnSaveEvent = new Button();
+            btnClear = new Button();
+            btnCancel = new Button();
+            pnlForm.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)nudCapacity).BeginInit();
             SuspendLayout();
-
-            // Form
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(650, 620);
-            MinimumSize = new System.Drawing.Size(650, 620);
-            MaximumSize = new System.Drawing.Size(650, 620);
-            StartPosition =
-                System.Windows.Forms.FormStartPosition.CenterParent;
-            FormBorderStyle =
-                System.Windows.Forms.FormBorderStyle.FixedDialog;
-            MaximizeBox = false;
-            MinimizeBox = false;
-            BackColor = System.Drawing.Color.FromArgb(245, 247, 251);
-            Font = new System.Drawing.Font("Segoe UI", 9F);
-            Text = "Create Event";
-
-            // Main white panel
-            pnlForm.Location = new System.Drawing.Point(35, 25);
-            pnlForm.Size = new System.Drawing.Size(565, 530);
-            pnlForm.BackColor = System.Drawing.Color.White;
+            // 
+            // pnlForm
+            // 
+            pnlForm.BackColor = Color.White;
             pnlForm.Controls.Add(lblFormTitle);
             pnlForm.Controls.Add(lblSubtitle);
             pnlForm.Controls.Add(lblTitle);
@@ -97,110 +80,181 @@ namespace HahuEvents.Desktop.Forms
             pnlForm.Controls.Add(btnSaveEvent);
             pnlForm.Controls.Add(btnClear);
             pnlForm.Controls.Add(btnCancel);
-
-            // Heading
+            pnlForm.Location = new Point(35, 25);
+            pnlForm.Name = "pnlForm";
+            pnlForm.Size = new Size(565, 530);
+            pnlForm.TabIndex = 0;
+            // 
+            // lblFormTitle
+            // 
+            lblFormTitle.Font = new System.Drawing.Font("Segoe UI", 19F, FontStyle.Bold);
+            lblFormTitle.ForeColor = Color.FromArgb(23, 32, 51);
+            lblFormTitle.Location = new Point(25, 18);
+            lblFormTitle.Name = "lblFormTitle";
+            lblFormTitle.Size = new Size(500, 38);
+            lblFormTitle.TabIndex = 0;
             lblFormTitle.Text = "Create New Event";
-            lblFormTitle.Font = new System.Drawing.Font(
-                "Segoe UI", 19F, System.Drawing.FontStyle.Bold);
-            lblFormTitle.ForeColor =
-                System.Drawing.Color.FromArgb(23, 32, 51);
-            lblFormTitle.Location = new System.Drawing.Point(25, 18);
-            lblFormTitle.Size = new System.Drawing.Size(500, 38);
-
+            // 
+            // lblSubtitle
+            // 
+            lblSubtitle.ForeColor = Color.FromArgb(102, 112, 133);
+            lblSubtitle.Location = new Point(28, 58);
+            lblSubtitle.Name = "lblSubtitle";
+            lblSubtitle.Size = new Size(480, 25);
+            lblSubtitle.TabIndex = 1;
             lblSubtitle.Text = "Enter your event details below.";
-            lblSubtitle.ForeColor =
-                System.Drawing.Color.FromArgb(102, 112, 133);
-            lblSubtitle.Location = new System.Drawing.Point(28, 58);
-            lblSubtitle.Size = new System.Drawing.Size(480, 25);
-
-            // Event title
+            // 
+            // lblTitle
+            // 
+            lblTitle.Location = new Point(28, 100);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(200, 22);
+            lblTitle.TabIndex = 2;
             lblTitle.Text = "Event Title";
-            lblTitle.Location = new System.Drawing.Point(28, 100);
-            lblTitle.Size = new System.Drawing.Size(200, 22);
-
-            txtEventTitle.Location = new System.Drawing.Point(28, 124);
-            txtEventTitle.Size = new System.Drawing.Size(500, 27);
-
-            // Description
+            // 
+            // txtEventTitle
+            // 
+            txtEventTitle.Location = new Point(28, 124);
+            txtEventTitle.Name = "txtEventTitle";
+            txtEventTitle.Size = new Size(500, 23);
+            txtEventTitle.TabIndex = 3;
+            // 
+            // lblDescription
+            // 
+            lblDescription.Location = new Point(28, 160);
+            lblDescription.Name = "lblDescription";
+            lblDescription.Size = new Size(200, 22);
+            lblDescription.TabIndex = 4;
             lblDescription.Text = "Description";
-            lblDescription.Location = new System.Drawing.Point(28, 160);
-            lblDescription.Size = new System.Drawing.Size(200, 22);
-
-            txtDescription.Location = new System.Drawing.Point(28, 184);
-            txtDescription.Size = new System.Drawing.Size(500, 65);
+            // 
+            // txtDescription
+            // 
+            txtDescription.Location = new Point(28, 184);
             txtDescription.Multiline = true;
-            txtDescription.ScrollBars =
-                System.Windows.Forms.ScrollBars.Vertical;
-
-            // Date and time
+            txtDescription.Name = "txtDescription";
+            txtDescription.ScrollBars = ScrollBars.Vertical;
+            txtDescription.Size = new Size(500, 65);
+            txtDescription.TabIndex = 5;
+            // 
+            // lblDate
+            // 
+            lblDate.Location = new Point(28, 260);
+            lblDate.Name = "lblDate";
+            lblDate.Size = new Size(200, 22);
+            lblDate.TabIndex = 6;
             lblDate.Text = "Event Date and Time";
-            lblDate.Location = new System.Drawing.Point(28, 260);
-            lblDate.Size = new System.Drawing.Size(200, 22);
-
-            dtpEventDate.Location = new System.Drawing.Point(28, 284);
-            dtpEventDate.Size = new System.Drawing.Size(500, 27);
-            dtpEventDate.Format =
-                System.Windows.Forms.DateTimePickerFormat.Custom;
+            // 
+            // dtpEventDate
+            // 
             dtpEventDate.CustomFormat = "dd/MM/yyyy HH:mm";
+            dtpEventDate.Format = DateTimePickerFormat.Custom;
+            dtpEventDate.Location = new Point(28, 284);
+            dtpEventDate.Name = "dtpEventDate";
             dtpEventDate.ShowUpDown = true;
-
-            // Location
+            dtpEventDate.Size = new Size(500, 23);
+            dtpEventDate.TabIndex = 7;
+            // 
+            // lblLocation
+            // 
+            lblLocation.Location = new Point(28, 320);
+            lblLocation.Name = "lblLocation";
+            lblLocation.Size = new Size(200, 22);
+            lblLocation.TabIndex = 8;
             lblLocation.Text = "Location";
-            lblLocation.Location = new System.Drawing.Point(28, 320);
-            lblLocation.Size = new System.Drawing.Size(200, 22);
-
-            txtLocation.Location = new System.Drawing.Point(28, 344);
-            txtLocation.Size = new System.Drawing.Size(500, 27);
-
-            // Capacity
+            // 
+            // txtLocation
+            // 
+            txtLocation.Location = new Point(28, 344);
+            txtLocation.Name = "txtLocation";
+            txtLocation.Size = new Size(500, 23);
+            txtLocation.TabIndex = 9;
+            // 
+            // lblCapacity
+            // 
+            lblCapacity.Location = new Point(28, 380);
+            lblCapacity.Name = "lblCapacity";
+            lblCapacity.Size = new Size(200, 22);
+            lblCapacity.TabIndex = 10;
             lblCapacity.Text = "Capacity";
-            lblCapacity.Location = new System.Drawing.Point(28, 380);
-            lblCapacity.Size = new System.Drawing.Size(200, 22);
-
-            nudCapacity.Location = new System.Drawing.Point(28, 404);
-            nudCapacity.Size = new System.Drawing.Size(235, 27);
-            nudCapacity.Minimum = 1;
-            nudCapacity.Maximum = 100000;
-            nudCapacity.Value = 1;
-
-            // Status
+            // 
+            // nudCapacity
+            // 
+            nudCapacity.Location = new Point(28, 404);
+            nudCapacity.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+            nudCapacity.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            nudCapacity.Name = "nudCapacity";
+            nudCapacity.Size = new Size(235, 23);
+            nudCapacity.TabIndex = 11;
+            nudCapacity.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            // 
+            // lblStatus
+            // 
+            lblStatus.Location = new Point(290, 380);
+            lblStatus.Name = "lblStatus";
+            lblStatus.Size = new Size(200, 22);
+            lblStatus.TabIndex = 12;
             lblStatus.Text = "Status";
-            lblStatus.Location = new System.Drawing.Point(290, 380);
-            lblStatus.Size = new System.Drawing.Size(200, 22);
-
-            cmbEventStatus.Location = new System.Drawing.Point(290, 404);
-            cmbEventStatus.Size = new System.Drawing.Size(238, 27);
-            cmbEventStatus.DropDownStyle =
-                System.Windows.Forms.ComboBoxStyle.DropDownList;
-
-            // Buttons
+            // 
+            // cmbEventStatus
+            // 
+            cmbEventStatus.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbEventStatus.Location = new Point(290, 404);
+            cmbEventStatus.Name = "cmbEventStatus";
+            cmbEventStatus.Size = new Size(238, 23);
+            cmbEventStatus.TabIndex = 13;
+            // 
+            // btnSaveEvent
+            // 
+            btnSaveEvent.BackColor = Color.RoyalBlue;
+            btnSaveEvent.FlatStyle = FlatStyle.Flat;
+            btnSaveEvent.ForeColor = Color.White;
+            btnSaveEvent.Location = new Point(28, 465);
+            btnSaveEvent.Name = "btnSaveEvent";
+            btnSaveEvent.Size = new Size(155, 40);
+            btnSaveEvent.TabIndex = 14;
             btnSaveEvent.Text = "Save Event";
-            btnSaveEvent.Location = new System.Drawing.Point(28, 465);
-            btnSaveEvent.Size = new System.Drawing.Size(155, 40);
-            btnSaveEvent.BackColor =
-                System.Drawing.Color.FromArgb(36, 87, 197);
-            btnSaveEvent.ForeColor = System.Drawing.Color.White;
-            btnSaveEvent.FlatStyle =
-                System.Windows.Forms.FlatStyle.Flat;
             btnSaveEvent.UseVisualStyleBackColor = false;
             btnSaveEvent.Click += btnSaveEvent_Click;
-
+            // 
+            // btnClear
+            // 
+            btnClear.FlatStyle = FlatStyle.Flat;
+            btnClear.Location = new Point(200, 465);
+            btnClear.Name = "btnClear";
+            btnClear.Size = new Size(140, 40);
+            btnClear.TabIndex = 15;
             btnClear.Text = "Clear";
-            btnClear.Location = new System.Drawing.Point(200, 465);
-            btnClear.Size = new System.Drawing.Size(140, 40);
-            btnClear.FlatStyle =
-                System.Windows.Forms.FlatStyle.Flat;
             btnClear.Click += btnClear_Click;
-
+            // 
+            // btnCancel
+            // 
+            btnCancel.FlatStyle = FlatStyle.Flat;
+            btnCancel.Location = new Point(388, 465);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new Size(140, 40);
+            btnCancel.TabIndex = 16;
             btnCancel.Text = "Cancel";
-            btnCancel.Location = new System.Drawing.Point(388, 465);
-            btnCancel.Size = new System.Drawing.Size(140, 40);
-            btnCancel.FlatStyle =
-                System.Windows.Forms.FlatStyle.Flat;
             btnCancel.Click += btnCancel_Click;
-
+            // 
+            // OrganizerEventForm
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(245, 247, 251);
+            ClientSize = new Size(634, 581);
             Controls.Add(pnlForm);
-
+            Font = new System.Drawing.Font("Segoe UI", 9F);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MaximumSize = new Size(650, 620);
+            MinimizeBox = false;
+            MinimumSize = new Size(650, 620);
+            Name = "OrganizerEventForm";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Create Event";
+            pnlForm.ResumeLayout(false);
+            pnlForm.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)nudCapacity).EndInit();
             ResumeLayout(false);
         }
     }

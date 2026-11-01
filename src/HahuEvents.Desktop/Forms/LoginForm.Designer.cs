@@ -26,95 +26,143 @@ namespace HahuEvents.Desktop.Forms
 
         private void InitializeComponent()
         {
-            pnlLogin = new System.Windows.Forms.Panel();
-            lblAppName = new System.Windows.Forms.Label();
-            lblTitle = new System.Windows.Forms.Label();
-            lblSubtitle = new System.Windows.Forms.Label();
-            lblUsername = new System.Windows.Forms.Label();
-            lblPassword = new System.Windows.Forms.Label();
-            txtUsername = new System.Windows.Forms.TextBox();
-            txtPassword = new System.Windows.Forms.TextBox();
-            chkShowPassword = new System.Windows.Forms.CheckBox();
-            btnLogin = new System.Windows.Forms.Button();
-            btnOpenRegister = new System.Windows.Forms.Button();
-
+            pnlLogin = new Panel();
+            lblAppName = new Label();
+            lblTitle = new Label();
+            lblSubtitle = new Label();
+            lblUsername = new Label();
+            txtUsername = new TextBox();
+            lblPassword = new Label();
+            txtPassword = new TextBox();
+            chkShowPassword = new CheckBox();
+            btnLogin = new Button();
+            btnOpenRegister = new Button();
+            pnlLogin.SuspendLayout();
             SuspendLayout();
-
-            Text = "HahuEvents - Login";
-            ClientSize = new System.Drawing.Size(500, 525);
-            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            MaximizeBox = false;
-            BackColor = System.Drawing.Color.FromArgb(245, 247, 251);
-            Font = new System.Drawing.Font("Segoe UI", 10F);
-
-            pnlLogin.Location = new System.Drawing.Point(45, 25);
-            pnlLogin.Size = new System.Drawing.Size(410, 475);
-            pnlLogin.BackColor = System.Drawing.Color.White;
-
+            // 
+            // pnlLogin
+            // 
+            pnlLogin.BackColor = Color.White;
+            pnlLogin.Controls.Add(lblAppName);
+            pnlLogin.Controls.Add(lblTitle);
+            pnlLogin.Controls.Add(lblSubtitle);
+            pnlLogin.Controls.Add(lblUsername);
+            pnlLogin.Controls.Add(txtUsername);
+            pnlLogin.Controls.Add(lblPassword);
+            pnlLogin.Controls.Add(txtPassword);
+            pnlLogin.Controls.Add(chkShowPassword);
+            pnlLogin.Controls.Add(btnLogin);
+            pnlLogin.Controls.Add(btnOpenRegister);
+            pnlLogin.Location = new Point(45, 25);
+            pnlLogin.Name = "pnlLogin";
+            pnlLogin.Size = new Size(410, 475);
+            pnlLogin.TabIndex = 0;
+            // 
+            // lblAppName
+            // 
+            lblAppName.Font = new Font("Segoe UI", 18F);
+            lblAppName.ForeColor = Color.FromArgb(36, 87, 197);
+            lblAppName.Location = new Point(35, 25);
+            lblAppName.Name = "lblAppName";
+            lblAppName.Size = new Size(340, 40);
+            lblAppName.TabIndex = 0;
             lblAppName.Text = "HahuEvents";
-            lblAppName.Font = new System.Drawing.Font("Segoe UI", 18F);
-            lblAppName.ForeColor = System.Drawing.Color.FromArgb(36, 87, 197);
-            lblAppName.Location = new System.Drawing.Point(35, 25);
-            lblAppName.Size = new System.Drawing.Size(340, 40);
-
+            // 
+            // lblTitle
+            // 
+            lblTitle.Font = new Font("Segoe UI", 22F, FontStyle.Bold);
+            lblTitle.Location = new Point(35, 95);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(340, 45);
+            lblTitle.TabIndex = 1;
             lblTitle.Text = "Welcome Back";
-            lblTitle.Font = new System.Drawing.Font(
-                "Segoe UI", 22F, System.Drawing.FontStyle.Bold);
-            lblTitle.Location = new System.Drawing.Point(35, 95);
-            lblTitle.Size = new System.Drawing.Size(340, 45);
-
+            // 
+            // lblSubtitle
+            // 
+            lblSubtitle.ForeColor = Color.Gray;
+            lblSubtitle.Location = new Point(35, 140);
+            lblSubtitle.Name = "lblSubtitle";
+            lblSubtitle.Size = new Size(340, 28);
+            lblSubtitle.TabIndex = 2;
             lblSubtitle.Text = "Sign in to manage your events.";
-            lblSubtitle.ForeColor = System.Drawing.Color.Gray;
-            lblSubtitle.Location = new System.Drawing.Point(35, 140);
-            lblSubtitle.Size = new System.Drawing.Size(340, 28);
-
+            // 
+            // lblUsername
+            // 
+            lblUsername.Location = new Point(35, 190);
+            lblUsername.Name = "lblUsername";
+            lblUsername.Size = new Size(330, 25);
+            lblUsername.TabIndex = 3;
             lblUsername.Text = "Username";
-            lblUsername.Location = new System.Drawing.Point(35, 190);
-            lblUsername.Size = new System.Drawing.Size(330, 25);
-
-            txtUsername.Location = new System.Drawing.Point(35, 217);
-            txtUsername.Size = new System.Drawing.Size(340, 32);
-
+            // 
+            // txtUsername
+            // 
+            txtUsername.Location = new Point(35, 217);
+            txtUsername.Name = "txtUsername";
+            txtUsername.Size = new Size(340, 25);
+            txtUsername.TabIndex = 4;
+            // 
+            // lblPassword
+            // 
+            lblPassword.Location = new Point(35, 263);
+            lblPassword.Name = "lblPassword";
+            lblPassword.Size = new Size(330, 25);
+            lblPassword.TabIndex = 5;
             lblPassword.Text = "Password";
-            lblPassword.Location = new System.Drawing.Point(35, 263);
-            lblPassword.Size = new System.Drawing.Size(330, 25);
-
-            txtPassword.Location = new System.Drawing.Point(35, 290);
-            txtPassword.Size = new System.Drawing.Size(340, 32);
+            // 
+            // txtPassword
+            // 
+            txtPassword.Location = new Point(35, 290);
+            txtPassword.Name = "txtPassword";
+            txtPassword.Size = new Size(340, 25);
+            txtPassword.TabIndex = 6;
             txtPassword.UseSystemPasswordChar = true;
-
+            // 
+            // chkShowPassword
+            // 
+            chkShowPassword.Location = new Point(35, 330);
+            chkShowPassword.Name = "chkShowPassword";
+            chkShowPassword.Size = new Size(200, 27);
+            chkShowPassword.TabIndex = 7;
             chkShowPassword.Text = "Show password";
-            chkShowPassword.Location = new System.Drawing.Point(35, 330);
-            chkShowPassword.Size = new System.Drawing.Size(200, 27);
-            chkShowPassword.CheckedChanged +=
-                chkShowPassword_CheckedChanged;
-
+            chkShowPassword.CheckedChanged += chkShowPassword_CheckedChanged;
+            // 
+            // btnLogin
+            // 
+            btnLogin.BackColor = Color.RoyalBlue;
+            btnLogin.FlatStyle = FlatStyle.Flat;
+            btnLogin.ForeColor = Color.White;
+            btnLogin.Location = new Point(35, 375);
+            btnLogin.Name = "btnLogin";
+            btnLogin.Size = new Size(340, 42);
+            btnLogin.TabIndex = 8;
             btnLogin.Text = "Sign In";
-            btnLogin.Location = new System.Drawing.Point(35, 375);
-            btnLogin.Size = new System.Drawing.Size(340, 42);
-            btnLogin.BackColor = System.Drawing.Color.FromArgb(36, 87, 197);
-            btnLogin.ForeColor = System.Drawing.Color.White;
-            btnLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             btnLogin.UseVisualStyleBackColor = false;
             btnLogin.Click += btnLogin_Click;
-
+            // 
+            // btnOpenRegister
+            // 
+            btnOpenRegister.FlatStyle = FlatStyle.Flat;
+            btnOpenRegister.Location = new Point(35, 425);
+            btnOpenRegister.Name = "btnOpenRegister";
+            btnOpenRegister.Size = new Size(340, 35);
+            btnOpenRegister.TabIndex = 9;
             btnOpenRegister.Text = "Create Organizer Account";
-            btnOpenRegister.Location = new System.Drawing.Point(35, 425);
-            btnOpenRegister.Size = new System.Drawing.Size(340, 35);
-            btnOpenRegister.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             btnOpenRegister.Click += btnOpenRegister_Click;
-
-            pnlLogin.Controls.AddRange(new System.Windows.Forms.Control[]
-            {
-                lblAppName, lblTitle, lblSubtitle, lblUsername,
-                txtUsername, lblPassword, txtPassword, chkShowPassword,
-                btnLogin, btnOpenRegister
-            });
-
-            Controls.Add(pnlLogin);
+            // 
+            // LoginForm
+            // 
             AcceptButton = btnLogin;
-
+            BackColor = Color.White;
+            ClientSize = new Size(500, 525);
+            Controls.Add(pnlLogin);
+            Font = new Font("Segoe UI", 10F);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            Name = "LoginForm";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "HahuEvents - Login";
+            pnlLogin.ResumeLayout(false);
+            pnlLogin.PerformLayout();
             ResumeLayout(false);
         }
     }

@@ -30,122 +30,182 @@ namespace HahuEvents.Desktop.Forms
 
         private void InitializeComponent()
         {
-            pnlRegister = new System.Windows.Forms.Panel();
-            lblAppName = new System.Windows.Forms.Label();
-            lblTitle = new System.Windows.Forms.Label();
-            lblSubtitle = new System.Windows.Forms.Label();
-            lblFullName = new System.Windows.Forms.Label();
-            lblUsername = new System.Windows.Forms.Label();
-            lblPassword = new System.Windows.Forms.Label();
-            lblConfirmPassword = new System.Windows.Forms.Label();
-            txtFullName = new System.Windows.Forms.TextBox();
-            txtUsername = new System.Windows.Forms.TextBox();
-            txtPassword = new System.Windows.Forms.TextBox();
-            txtConfirmPassword = new System.Windows.Forms.TextBox();
-            chkShowPassword = new System.Windows.Forms.CheckBox();
-            btnRegister = new System.Windows.Forms.Button();
-            btnBackToLogin = new System.Windows.Forms.Button();
-
+            pnlRegister = new Panel();
+            lblAppName = new Label();
+            lblTitle = new Label();
+            lblSubtitle = new Label();
+            lblFullName = new Label();
+            txtFullName = new TextBox();
+            lblUsername = new Label();
+            txtUsername = new TextBox();
+            lblPassword = new Label();
+            txtPassword = new TextBox();
+            lblConfirmPassword = new Label();
+            txtConfirmPassword = new TextBox();
+            chkShowPassword = new CheckBox();
+            btnRegister = new Button();
+            btnBackToLogin = new Button();
+            pnlRegister.SuspendLayout();
             SuspendLayout();
-
-            Text = "HahuEvents - Organizer Registration";
-            ClientSize = new System.Drawing.Size(500, 635);
-            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            MaximizeBox = false;
-            BackColor = System.Drawing.Color.FromArgb(245, 247, 251);
-            Font = new System.Drawing.Font("Segoe UI", 10F);
-
-            pnlRegister.Location = new System.Drawing.Point(45, 20);
-            pnlRegister.Size = new System.Drawing.Size(410, 595);
-            pnlRegister.BackColor = System.Drawing.Color.White;
-
+            // 
+            // pnlRegister
+            // 
+            pnlRegister.BackColor = Color.White;
+            pnlRegister.Controls.Add(lblAppName);
+            pnlRegister.Controls.Add(lblTitle);
+            pnlRegister.Controls.Add(lblSubtitle);
+            pnlRegister.Controls.Add(lblFullName);
+            pnlRegister.Controls.Add(txtFullName);
+            pnlRegister.Controls.Add(lblUsername);
+            pnlRegister.Controls.Add(txtUsername);
+            pnlRegister.Controls.Add(lblPassword);
+            pnlRegister.Controls.Add(txtPassword);
+            pnlRegister.Controls.Add(lblConfirmPassword);
+            pnlRegister.Controls.Add(txtConfirmPassword);
+            pnlRegister.Controls.Add(chkShowPassword);
+            pnlRegister.Controls.Add(btnRegister);
+            pnlRegister.Controls.Add(btnBackToLogin);
+            pnlRegister.Location = new Point(45, 20);
+            pnlRegister.Name = "pnlRegister";
+            pnlRegister.Size = new Size(410, 595);
+            pnlRegister.TabIndex = 0;
+            // 
+            // lblAppName
+            // 
+            lblAppName.Font = new Font("Segoe UI", 18F);
+            lblAppName.ForeColor = Color.FromArgb(36, 87, 197);
+            lblAppName.Location = new Point(35, 20);
+            lblAppName.Name = "lblAppName";
+            lblAppName.Size = new Size(340, 40);
+            lblAppName.TabIndex = 0;
             lblAppName.Text = " HahuEvents";
-            lblAppName.Font = new System.Drawing.Font("Segoe UI", 18F);
-            lblAppName.ForeColor = System.Drawing.Color.FromArgb(36, 87, 197);
-            lblAppName.Location = new System.Drawing.Point(35, 20);
-            lblAppName.Size = new System.Drawing.Size(340, 40);
-
+            // 
+            // lblTitle
+            // 
+            lblTitle.Font = new Font("Segoe UI", 22F, FontStyle.Bold);
+            lblTitle.Location = new Point(35, 75);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(340, 45);
+            lblTitle.TabIndex = 1;
             lblTitle.Text = "Create Account";
-            lblTitle.Font = new System.Drawing.Font(
-                "Segoe UI", 22F, System.Drawing.FontStyle.Bold);
-            lblTitle.Location = new System.Drawing.Point(35, 75);
-            lblTitle.Size = new System.Drawing.Size(340, 45);
-
+            // 
+            // lblSubtitle
+            // 
+            lblSubtitle.ForeColor = Color.Gray;
+            lblSubtitle.Location = new Point(35, 120);
+            lblSubtitle.Name = "lblSubtitle";
+            lblSubtitle.Size = new Size(340, 28);
+            lblSubtitle.TabIndex = 2;
             lblSubtitle.Text = "Register as an event organizer.";
-            lblSubtitle.ForeColor = System.Drawing.Color.Gray;
-            lblSubtitle.Location = new System.Drawing.Point(35, 120);
-            lblSubtitle.Size = new System.Drawing.Size(340, 28);
-
+            // 
+            // lblFullName
+            // 
+            lblFullName.Location = new Point(35, 165);
+            lblFullName.Name = "lblFullName";
+            lblFullName.Size = new Size(330, 25);
+            lblFullName.TabIndex = 3;
             lblFullName.Text = "Full Name";
-            lblFullName.Location = new System.Drawing.Point(35, 165);
-            lblFullName.Size = new System.Drawing.Size(330, 25);
-
-            txtFullName.Location = new System.Drawing.Point(35, 192);
-            txtFullName.Size = new System.Drawing.Size(340, 32);
-
+            // 
+            // txtFullName
+            // 
+            txtFullName.Location = new Point(35, 192);
+            txtFullName.Name = "txtFullName";
+            txtFullName.Size = new Size(340, 25);
+            txtFullName.TabIndex = 4;
+            // 
+            // lblUsername
+            // 
+            lblUsername.Location = new Point(35, 237);
+            lblUsername.Name = "lblUsername";
+            lblUsername.Size = new Size(330, 25);
+            lblUsername.TabIndex = 5;
             lblUsername.Text = "Username";
-            lblUsername.Location = new System.Drawing.Point(35, 237);
-            lblUsername.Size = new System.Drawing.Size(330, 25);
-
-            txtUsername.Location = new System.Drawing.Point(35, 264);
-            txtUsername.Size = new System.Drawing.Size(340, 32);
-
+            // 
+            // txtUsername
+            // 
+            txtUsername.Location = new Point(35, 264);
+            txtUsername.Name = "txtUsername";
+            txtUsername.Size = new Size(340, 25);
+            txtUsername.TabIndex = 6;
+            // 
+            // lblPassword
+            // 
+            lblPassword.Location = new Point(35, 309);
+            lblPassword.Name = "lblPassword";
+            lblPassword.Size = new Size(340, 25);
+            lblPassword.TabIndex = 7;
             lblPassword.Text = "Password";
-            lblPassword.Location = new System.Drawing.Point(35, 309);
-            lblPassword.Size = new System.Drawing.Size(340, 25);
-
-            txtPassword.Location = new System.Drawing.Point(35, 336);
-            txtPassword.Size = new System.Drawing.Size(340, 32);
+            // 
+            // txtPassword
+            // 
+            txtPassword.Location = new Point(35, 336);
+            txtPassword.Name = "txtPassword";
+            txtPassword.Size = new Size(340, 25);
+            txtPassword.TabIndex = 8;
             txtPassword.UseSystemPasswordChar = true;
-
+            // 
+            // lblConfirmPassword
+            // 
+            lblConfirmPassword.Location = new Point(35, 381);
+            lblConfirmPassword.Name = "lblConfirmPassword";
+            lblConfirmPassword.Size = new Size(340, 25);
+            lblConfirmPassword.TabIndex = 9;
             lblConfirmPassword.Text = "Confirm Password";
-            lblConfirmPassword.Location = new System.Drawing.Point(35, 381);
-            lblConfirmPassword.Size = new System.Drawing.Size(340, 25);
-
-            txtConfirmPassword.Location =
-                new System.Drawing.Point(35, 408);
-            txtConfirmPassword.Size = new System.Drawing.Size(340, 32);
+            // 
+            // txtConfirmPassword
+            // 
+            txtConfirmPassword.Location = new Point(35, 408);
+            txtConfirmPassword.Name = "txtConfirmPassword";
+            txtConfirmPassword.Size = new Size(340, 25);
+            txtConfirmPassword.TabIndex = 10;
             txtConfirmPassword.UseSystemPasswordChar = true;
-
+            // 
+            // chkShowPassword
+            // 
+            chkShowPassword.Location = new Point(35, 449);
+            chkShowPassword.Name = "chkShowPassword";
+            chkShowPassword.Size = new Size(200, 27);
+            chkShowPassword.TabIndex = 11;
             chkShowPassword.Text = "Show password";
-            chkShowPassword.Location = new System.Drawing.Point(35, 449);
-            chkShowPassword.Size = new System.Drawing.Size(200, 27);
-            chkShowPassword.CheckedChanged +=
-                chkShowPassword_CheckedChanged;
-
+            chkShowPassword.CheckedChanged += chkShowPassword_CheckedChanged;
+            // 
+            // btnRegister
+            // 
+            btnRegister.BackColor = Color.RoyalBlue;
+            btnRegister.FlatStyle = FlatStyle.Flat;
+            btnRegister.ForeColor = Color.White;
+            btnRegister.Location = new Point(35, 490);
+            btnRegister.Name = "btnRegister";
+            btnRegister.Size = new Size(340, 42);
+            btnRegister.TabIndex = 12;
             btnRegister.Text = "Create Organizer Account";
-            btnRegister.Location = new System.Drawing.Point(35, 490);
-            btnRegister.Size = new System.Drawing.Size(340, 42);
-            btnRegister.BackColor =
-                System.Drawing.Color.FromArgb(36, 87, 197);
-            btnRegister.ForeColor = System.Drawing.Color.White;
-            btnRegister.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             btnRegister.UseVisualStyleBackColor = false;
             btnRegister.Click += btnRegister_Click;
-
+            // 
+            // btnBackToLogin
+            // 
+            btnBackToLogin.FlatStyle = FlatStyle.Flat;
+            btnBackToLogin.Location = new Point(35, 540);
+            btnBackToLogin.Name = "btnBackToLogin";
+            btnBackToLogin.Size = new Size(340, 35);
+            btnBackToLogin.TabIndex = 13;
             btnBackToLogin.Text = "Back to Login";
-            btnBackToLogin.Location = new System.Drawing.Point(35, 540);
-            btnBackToLogin.Size = new System.Drawing.Size(340, 35);
-            btnBackToLogin.FlatStyle =
-                System.Windows.Forms.FlatStyle.Flat;
             btnBackToLogin.Click += btnBackToLogin_Click;
-
-            pnlRegister.Controls.AddRange(
-                new System.Windows.Forms.Control[]
-                {
-                    lblAppName, lblTitle, lblSubtitle,
-                    lblFullName, txtFullName,
-                    lblUsername, txtUsername,
-                    lblPassword, txtPassword,
-                    lblConfirmPassword, txtConfirmPassword,
-                    chkShowPassword, btnRegister,
-                    btnBackToLogin
-                });
-
-            Controls.Add(pnlRegister);
+            // 
+            // RegisterForm
+            // 
             AcceptButton = btnRegister;
-
+            BackColor = Color.White;
+            ClientSize = new Size(500, 635);
+            Controls.Add(pnlRegister);
+            Font = new Font("Segoe UI", 10F);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            Name = "RegisterForm";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "HahuEvents - Organizer Registration";
+            pnlRegister.ResumeLayout(false);
+            pnlRegister.PerformLayout();
             ResumeLayout(false);
         }
     }

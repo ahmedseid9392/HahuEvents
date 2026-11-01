@@ -36,6 +36,33 @@ namespace HahuEvents.Desktop.Services
         private static int _nextId = 7;
         private static User? _currentUser;
 
+        public static IReadOnlyList<User> GetOrganizers()
+        {
+            return Users
+                .Where(user => user.Role == UserRole.Organizer)
+                .OrderBy(user => user.FullName)
+                .ToArray();
+        }
+
+        public static User? GetOrganizer(int organizerId)
+        {
+            return Users.FirstOrDefault(user =>
+                user.Id == organizerId &&
+                user.Role == UserRole.Organizer);
+        }
+
+        public static bool SetOrganizerActive(int organizerId, bool isActive)
+        {
+            User? organizer = GetOrganizer(organizerId);
+            if (organizer == null)
+            {
+                return false;
+            }
+
+            organizer.IsActive = isActive;
+            return true;
+        }
+
         public static User CurrentUser => _currentUser
             ?? throw new InvalidOperationException("No user is currently logged in.");
 
@@ -51,6 +78,18 @@ namespace HahuEvents.Desktop.Services
             if (string.IsNullOrWhiteSpace(fullName))
             {
                 message = "Full name is required.";
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                message = "Username is required.";
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                message = "Password is required.";
                 return false;
             }
 
