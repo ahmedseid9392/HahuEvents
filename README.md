@@ -38,18 +38,14 @@ HahuEvents/
 │       ├── Forms/
 │       ├── Models/
 │       ├── Services/
-│       ├── Helpers/
 │       ├── Program.cs
 │       └── HahuEvents.Desktop.csproj
 ├── tests/
 │   └── HahuEvents.Tests/
 └── docs/
-    ├── requirements.md
-    ├── business-rules.md
-    ├── database-design.md
-    ├── test-cases.md
-    ├── figma-links.md
-    └── team-contributions.md
+ ├── business-rules.md
+    
+    
 ```
 
 ## 3. Forms — User Interface
