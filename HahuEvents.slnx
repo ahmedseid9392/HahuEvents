@@ -2,4 +2,6 @@
   <Folder Name="/src/">
     <Project Path="src/HahuEvents.Desktop/HahuEvents.Desktop.csproj" />
   </Folder>
+  <Project Path="src/HahuEvents.BusinessApi/HahuEvents.BusinessApi.csproj" Id="289917e0-7864-4190-accd-8bf1db983fc3" />
+  <Project Path="src/HahuEvents.Data/HahuEvents.Data.csproj" Id="a289561e-026f-4d9a-9a4e-7341d9ce7377" />
 </Solution>
